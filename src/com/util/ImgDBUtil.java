@@ -5,12 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Image DB Util class
+ * #USAGE PENDING
+ * @author Luck
+ *
+ */
 public class ImgDBUtil extends SQLiteOpenHelper{
 	
 	protected String SQL_CREATE = "CREATE TABLE tb_img";
-//	protected String SQL_INSERT = "INSERT INTO ? VALUES('')";
-//	protected String SQL_DELETE = "DELETE FROM ? WHERE ";
-//	protected String SQL_UPDATE = "";
 	
 	public ImgDBUtil(Context context, String name, CursorFactory factory,
 			int version) {

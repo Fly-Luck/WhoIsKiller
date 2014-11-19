@@ -44,12 +44,12 @@ public class MainActivity extends Activity implements OnClickListener{
 		if(v.getId() == R.id.takePicBtn){
 			if(Config.getInstance().getTotalPlayers() == Config.MAX_PLAYERS){
 				new AlertDialog.Builder(this).setMessage("Maximum players reached!").setTitle("Error").show();
-				return;
+				return;/*
 			} else if(nameTxt.getText().toString().equals("")){
 				new AlertDialog.Builder(this).setMessage("Empty player name!").setTitle("Error").show();
 			} else if(Config.getInstance().hasPlayerIn(nameTxt.getText().toString())){
 				new AlertDialog.Builder(this).setMessage("Duplicated player name!").setTitle("Error").show();
-				return;
+				return;*/
 			} else{
 				sView.camTakePic();
 			}

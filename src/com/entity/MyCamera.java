@@ -140,7 +140,8 @@ public class MyCamera implements OnCamTakePicFinished{
 		setBitmap(jpegCallback.getBitmap());
 		previewing = true;
 		camera.startPreview();
-		Config.imgCache.put(pName, bitmap);
+		//Config.imgCache.put(pName, bitmap);
+		Config.imgList.add(bitmap);
 		Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()+1);
 	}
 	

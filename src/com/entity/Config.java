@@ -1,5 +1,6 @@
 package com.entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -32,8 +33,10 @@ public class Config {
 	private int killersLeft;
 	private int civilsLeft;
 	private int policesLeft;
-	//cache map to store image
+	//cache map to store image - DEPRECATED
 	public static HashMap<String, Object> imgCache;
+	//cache list to store image
+	public static ArrayList<Object> imgList;
 	public int getTotalPlayers() {
 		return totalPlayers;
 	}
@@ -59,6 +62,7 @@ public class Config {
 		civilsLeft = 0;
 		policesLeft = 0;
 		imgCache = new HashMap<String, Object>();
+		imgList = new ArrayList<Object>();
 	}
 	/**
 	 * Singleton instance getter
