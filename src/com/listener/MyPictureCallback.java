@@ -27,5 +27,4 @@ public class MyPictureCallback implements PictureCallback{
 	public void setBitmap(Bitmap bitmap){
 		this.bitmap = bitmap;
 	}
-
 }

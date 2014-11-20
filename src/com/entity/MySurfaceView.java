@@ -61,7 +61,7 @@ public class MySurfaceView extends SurfaceView implements Callback, OnCamOpenFin
 	 */
 	public void camTakePic(){
 		camera.setpName(nameTxt.getText().toString());
-		camera.doTakePic(viewHolder);
+		camera.doTakePic();
 	}
 	/**
 	 * camera stop controller

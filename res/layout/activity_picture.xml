@@ -1,0 +1,54 @@
+<LinearLayout android:id="@+id/ll"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.activity.PictureActivity" 
+    android:orientation="horizontal">
+
+    <RelativeLayout android:id="@+id/p1"
+        android:layout_width="100dip"
+        android:layout_height="100dip">
+        <ImageView android:id="@+id/i1"
+            android:src="@drawable/conan"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
+            android:background="#00000000"/>
+        <Button android:id="@+id/rm1"
+            android:background="@drawable/test"
+            android:layout_width="30dip"
+            android:layout_height="30dip"/>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/p2"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_marginLeft="5dip">
+        <ImageView android:id="@+id/i2"
+            android:src="@drawable/conan"
+            android:layout_width="100dip"
+            android:layout_height="100dip"/>
+        <Button android:id="@+id/rm2"
+            android:background="@drawable/test"
+            android:layout_width="30dip"
+            android:layout_height="30dip"/>
+    </RelativeLayout>
+    <RelativeLayout android:id="@+id/p3"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_marginLeft="5dip">
+        <ImageView android:id="@+id/i3"
+            android:src="@drawable/conan"
+            android:layout_width="100dip"
+            android:layout_height="100dip"/>
+        <Button android:id="@+id/rm3"
+            android:background="@drawable/test"
+            android:layout_width="30dip"
+            android:layout_height="30dip"/>
+    </RelativeLayout>
+    
+    
+</LinearLayout>

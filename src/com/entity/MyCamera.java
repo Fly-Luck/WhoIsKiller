@@ -53,8 +53,8 @@ public class MyCamera implements OnCamTakePicFinished{
 	private MyCamera(){
 		preWidth = 500;
 		preHeight = 500;
-		picWidth = 500;
-		picHeight = 500;
+		picWidth = 640;
+		picHeight = 480;
 		picFormat = ImageFormat.JPEG;
 		focusMode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO;
 		dispOrient = 90;
@@ -94,7 +94,8 @@ public class MyCamera implements OnCamTakePicFinished{
 		if(camera == null)
 			return;
 		cParam = camera.getParameters();
-		//TO-DO: more camera parameter settings
+		//TO-DO: more camera parameter settings, and RIGHT SETTINGS!
+		//e.g. setting picture size based on cParam.getSupportedSizes();
 		cParam.setPreviewSize(preWidth, preHeight);
 		cParam.setPictureFormat(picFormat);
 		cParam.setPictureSize(picWidth, picHeight);
@@ -126,7 +127,7 @@ public class MyCamera implements OnCamTakePicFinished{
 	/**
 	 * camera take picture implementation
 	 */
-	public void doTakePic(SurfaceHolder holder){
+	public void doTakePic(){
 		camera.takePicture(shutterCallback, null, null, jpegCallback);
 		previewing = false;
 	}
@@ -134,13 +135,14 @@ public class MyCamera implements OnCamTakePicFinished{
 	@Override
 	/**
 	 * Implementation of OnCamTakePicFinished intf,
-	 * Invoked when a picture is PROCESSED and CACHED,
+	 * Invoked when a picture is PROCESSED
+	 * CACHE the picture in this function
 	 */
 	public void camPicTaken(){
 		setBitmap(jpegCallback.getBitmap());
 		previewing = true;
 		camera.startPreview();
-		//Config.imgCache.put(pName, bitmap);
+		//TO-DO:rotate the result bitmap clockwise 90 degree
 		Config.imgList.add(bitmap);
 		Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()+1);
 	}

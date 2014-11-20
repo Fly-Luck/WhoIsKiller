@@ -2,6 +2,7 @@ package com.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,18 +45,14 @@ public class MainActivity extends Activity implements OnClickListener{
 		if(v.getId() == R.id.takePicBtn){
 			if(Config.getInstance().getTotalPlayers() == Config.MAX_PLAYERS){
 				new AlertDialog.Builder(this).setMessage("Maximum players reached!").setTitle("Error").show();
-				return;/*
-			} else if(nameTxt.getText().toString().equals("")){
-				new AlertDialog.Builder(this).setMessage("Empty player name!").setTitle("Error").show();
-			} else if(Config.getInstance().hasPlayerIn(nameTxt.getText().toString())){
-				new AlertDialog.Builder(this).setMessage("Duplicated player name!").setTitle("Error").show();
-				return;*/
+				return;
 			} else{
 				sView.camTakePic();
 			}
 		}
 		if(v.getId() == showPicBtn.getId()){
 			showPicBtn.setText(Config.getInstance().getTotalPlayers()+"");
+			startActivity(new Intent(this.getBaseContext(), PictureActivity.class));
 		}
 	}
 
