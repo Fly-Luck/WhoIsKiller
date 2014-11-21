@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="str_take">Take</string>
     <string name="str_show">Show</string>
+    <string name="str_defaultDesc">Default Description</string>
     <string name="title_activity_picture">PictureActivity</string>
 
 </resources>

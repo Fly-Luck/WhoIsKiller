@@ -14,7 +14,11 @@ import com.entity.Config;
 import com.entity.MySurfaceView;
 import com.whoiskiller.R;
   
-
+/**
+ * Picture taking activity
+ * @author Luck
+ *
+ */
 public class MainActivity extends Activity implements OnClickListener{
 	private Button takePicBtn;
 	private Button showPicBtn;

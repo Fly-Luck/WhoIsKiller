@@ -2,6 +2,12 @@ package com.entity;
 
 import android.graphics.Bitmap;
 
+/**
+ * Entity class for image processing
+ * #TO-BE-DEPRECATED
+ * @author Luck
+ *
+ */
 public class Image {
 	private String name;
 	private Bitmap bitmap;

@@ -9,6 +9,7 @@ import com.listener.MyShutterCallback;
 
 import android.graphics.Bitmap;
 import android.graphics.ImageFormat;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.view.SurfaceHolder;
@@ -142,11 +143,33 @@ public class MyCamera implements OnCamTakePicFinished{
 		setBitmap(jpegCallback.getBitmap());
 		previewing = true;
 		camera.startPreview();
-		//TO-DO:rotate the result bitmap clockwise 90 degree
+		//rotate the picture clockwise 90 degree
+		Matrix matrix = new Matrix();
+		matrix.reset();
+		matrix.setRotate(90);
+		bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		bitmap = zoomBitmap(bitmap, 100, 100);
 		Config.imgList.add(bitmap);
 		Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()+1);
 	}
-	
+	/**
+	 * Zoom the bitmap to a required pair of w/h
+	 * @param bitmap
+	 * @param w
+	 * @param h
+	 * @return
+	 */
+	private Bitmap zoomBitmap(Bitmap bitmap, int w, int h){  
+        int width = bitmap.getWidth();  
+        int height = bitmap.getHeight();  
+        Matrix matrix = new Matrix();  
+        float scaleWidth = ((float) w / width);  
+        float scaleHeight = ((float) h / height);  
+        matrix.postScale(scaleWidth, scaleHeight);  
+        Bitmap newBmp = Bitmap.createBitmap(bitmap, 0, 0, width, height,  
+                matrix, true);  
+        return newBmp;  
+    }
 	public Camera getCamera() {
 		return camera;
 	}

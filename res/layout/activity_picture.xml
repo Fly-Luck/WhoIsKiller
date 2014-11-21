@@ -8,47 +8,17 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.activity.PictureActivity" 
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <RelativeLayout android:id="@+id/p1"
-        android:layout_width="100dip"
-        android:layout_height="100dip">
-        <ImageView android:id="@+id/i1"
-            android:src="@drawable/conan"
-            android:layout_width="100dip"
-            android:layout_height="100dip"
-            android:background="#00000000"/>
-        <Button android:id="@+id/rm1"
-            android:background="@drawable/test"
-            android:layout_width="30dip"
-            android:layout_height="30dip"/>
-    </RelativeLayout>
-    <RelativeLayout android:id="@+id/p2"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
-        android:layout_marginLeft="5dip">
-        <ImageView android:id="@+id/i2"
-            android:src="@drawable/conan"
-            android:layout_width="100dip"
-            android:layout_height="100dip"/>
-        <Button android:id="@+id/rm2"
-            android:background="@drawable/test"
-            android:layout_width="30dip"
-            android:layout_height="30dip"/>
-    </RelativeLayout>
-    <RelativeLayout android:id="@+id/p3"
-        android:layout_width="100dip"
-        android:layout_height="100dip"
-        android:layout_marginLeft="5dip">
-        <ImageView android:id="@+id/i3"
-            android:src="@drawable/conan"
-            android:layout_width="100dip"
-            android:layout_height="100dip"/>
-        <Button android:id="@+id/rm3"
-            android:background="@drawable/test"
-            android:layout_width="30dip"
-            android:layout_height="30dip"/>
-    </RelativeLayout>
-    
+	<GridView android:id="@+id/playerGrid"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:numColumns="3"
+	    android:verticalSpacing="10dip"
+	    android:horizontalSpacing="10dip"
+	    android:columnWidth="100dip"
+	    android:stretchMode="columnWidth"
+	    android:gravity="center">
+	</GridView>
     
 </LinearLayout>
