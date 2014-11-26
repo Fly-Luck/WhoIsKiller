@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.entity.Config;
 import com.entity.MySurfaceView;
 import com.whoiskiller.R;
-  
 /**
  * Picture taking activity
  * @author Luck
@@ -22,7 +20,7 @@ import com.whoiskiller.R;
 public class MainActivity extends Activity implements OnClickListener{
 	private Button takePicBtn;
 	private Button showPicBtn;
-	private EditText nameTxt;
+	private Button switchBtn;
 	private MySurfaceView sView;
 	private int sViewWidth = 500;
 	private int sViewHeight = 500;
@@ -33,11 +31,11 @@ public class MainActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_main);
 		takePicBtn = (Button) findViewById(R.id.takePicBtn);
 		showPicBtn = (Button) findViewById(R.id.showPicBtn);
-		nameTxt = (EditText) findViewById(R.id.nameTxt);
+		switchBtn = (Button) findViewById(R.id.switchBtn);
 		sView = (MySurfaceView) findViewById(R.id.sView);
-		sView.setNameTxt(nameTxt);
 		takePicBtn.setOnClickListener(this);
 		showPicBtn.setOnClickListener(this);
+		switchBtn.setOnClickListener(this);
 		LayoutParams params = sView.getLayoutParams();
 		params.height = sViewHeight;
 		params.width = sViewWidth;
@@ -53,6 +51,9 @@ public class MainActivity extends Activity implements OnClickListener{
 			} else{
 				sView.camTakePic();
 			}
+		}
+		if(v.getId() == R.id.switchBtn){
+			sView.camSwitch(sView);
 		}
 		if(v.getId() == showPicBtn.getId()){
 			showPicBtn.setText(Config.getInstance().getTotalPlayers()+"");

@@ -12,11 +12,6 @@
     	<com.entity.MySurfaceView android:id="@+id/sView"
   	    android:layout_height="0dip"
   	    android:layout_width="0dip"/>
-		<EditText android:id="@+id/nameTxt"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:inputType="text"/>
 	    <Button 
 	        android:id="@+id/takePicBtn"
 	        android:layout_width="fill_parent"
@@ -24,6 +19,12 @@
 	        android:layout_marginBottom="15dp"
 		    android:layout_weight="1"
 	        android:text="@string/str_take" />  
+	    <Button android:id="@+id/switchBtn"
+	        android:layout_width="fill_parent"
+	        android:layout_height="20dip"
+	        android:layout_marginBottom="15dp"
+	        android:layout_weight="1"
+	        android:text="@string/str_switch"/>
 	    <Button  
 	        android:id="@+id/showPicBtn"  
 	        android:layout_width="fill_parent"  

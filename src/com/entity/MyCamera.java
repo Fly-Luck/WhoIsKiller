@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.intf.OnCamOpenFinished;
 import com.intf.OnCamTakePicFinished;
@@ -12,6 +13,7 @@ import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.hardware.Camera.Size;
 import android.view.SurfaceHolder;
 
 /**
@@ -35,6 +37,7 @@ public class MyCamera implements OnCamTakePicFinished{
 	private String focusMode;
 	private int dispOrient;
 	private boolean previewing;
+	private int currentCam;
 	//player name
 	private String pName;
 	//event callback instances
@@ -60,6 +63,7 @@ public class MyCamera implements OnCamTakePicFinished{
 		focusMode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO;
 		dispOrient = 90;
 		previewing = false;
+		currentCam = 0;
 		bitmap = null;
 		jpegCallback = new MyPictureCallback(this);
 		shutterCallback = new MyShutterCallback();
@@ -76,7 +80,7 @@ public class MyCamera implements OnCamTakePicFinished{
 	 */
 	public void doOpen(OnCamOpenFinished callback){
 		try{
-			camera = Camera.open();
+			camera = Camera.open(currentCam);
 			callback.camOpened();
 		} catch(RuntimeException e){
 			e.printStackTrace();
@@ -95,15 +99,50 @@ public class MyCamera implements OnCamTakePicFinished{
 		if(camera == null)
 			return;
 		cParam = camera.getParameters();
-		//TO-DO: more camera parameter settings, and RIGHT SETTINGS!
-		//e.g. setting picture size based on cParam.getSupportedSizes();
-		cParam.setPreviewSize(preWidth, preHeight);
-		cParam.setPictureFormat(picFormat);
-		cParam.setPictureSize(picWidth, picHeight);
-		cParam.setFocusMode(focusMode);
+		//supported lists
+		List<Size> preSizes = cParam.getSupportedPreviewSizes();
+		List<Size> picSizes = cParam.getSupportedPreviewSizes();
+		List<Integer> picFormats = cParam.getSupportedPictureFormats();
+		List<String> focusModes = cParam.getSupportedFocusModes();
+		//set to default preview size
+		cParam.setPreviewSize(preSizes.get(0).width, preSizes.get(0).height);
+		for (Size size : preSizes) {
+			//if it's supported preview size
+			if(size.width == picWidth && size.height == picHeight){
+				cParam.setPreviewSize(picWidth, picHeight);				
+			}
+		}
+		//set to default picture size
+		cParam.setPictureSize(picSizes.get(0).width, picSizes.get(0).height);
+		for (Size size : picSizes) {
+			//if it's supported picture size
+			if(size.width == picWidth && size.height == picHeight){
+				cParam.setPictureSize(picWidth, picHeight);	
+			}
+		}
+		//set to default picture format
+		cParam.setPictureFormat(picFormats.get(0));
+		for (Integer format: picFormats) {
+			//if it's supported picture format
+			if(format.equals(picFormat)){
+				cParam.setPictureFormat(picFormat);
+			}
+		}
+		//set to default focus mode
+		cParam.setFocusMode(focusModes.get(0));
+		for (String mode : focusModes) {
+			//if it's supported focus mode
+			if(mode.equals(focusMode)){
+				cParam.setFocusMode(focusMode);
+			}
+		}
+		//correcting default rotation
 		camera.setDisplayOrientation(dispOrient);
+		//front camera needs to rotate more
+		if(currentCam == 1){
+			cParam.set("rotation", 180);
+		}
 		camera.setParameters(cParam);
-		
 		try {
 			camera.setPreviewDisplay(holder);
 			camera.startPreview();
@@ -143,14 +182,43 @@ public class MyCamera implements OnCamTakePicFinished{
 		setBitmap(jpegCallback.getBitmap());
 		previewing = true;
 		camera.startPreview();
-		//rotate the picture clockwise 90 degree
 		Matrix matrix = new Matrix();
 		matrix.reset();
-		matrix.setRotate(90);
+		if(currentCam == 0){
+			//rotate the picture clockwise 90 degree
+			matrix.setRotate(90);
+		} else {
+			//rotate pre 90 degree
+			matrix.preRotate(90);
+			//flip the mirror image
+		    float[] mirrorY = { -1, 0, 0, 0, 1, 0, 0, 0, 1};
+		    matrix = new Matrix();
+		    Matrix matrixMirrorY = new Matrix();
+		    matrixMirrorY.setValues(mirrorY);
+		    matrix.postConcat(matrixMirrorY);
+		    //rotate pre 90 degree
+		    matrix.preRotate(90);
+		}
 		bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 		bitmap = zoomBitmap(bitmap, 100, 100);
 		Config.imgList.add(bitmap);
 		Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()+1);
+	}
+	/**
+	 * camera switch implementation
+	 * @param callback
+	 */
+	public void doSwitch(OnCamOpenFinished callback){
+		doStop();
+		switch (currentCam) {
+		case 0:
+			currentCam = 1;
+			break;
+		case 1:
+			currentCam = 0;
+			break;
+		}
+		doOpen(callback);
 	}
 	/**
 	 * Zoom the bitmap to a required pair of w/h

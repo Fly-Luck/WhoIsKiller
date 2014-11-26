@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder.Callback;
-import android.widget.EditText;
 
 /**
  * Entity class for surface view
@@ -24,8 +23,6 @@ public class MySurfaceView extends SurfaceView implements Callback, OnCamOpenFin
 	private MyCamera camera;
 	//holder instance to control the surface view
 	private SurfaceHolder viewHolder;
-	//EditText to get player names
-	private EditText nameTxt;
 	public MySurfaceView(Context context, AttributeSet attr) {
 		super(context,attr);
 		this.cont = context;
@@ -60,7 +57,6 @@ public class MySurfaceView extends SurfaceView implements Callback, OnCamOpenFin
 	 * camera take pic controller
 	 */
 	public void camTakePic(){
-		camera.setpName(nameTxt.getText().toString());
 		camera.doTakePic();
 	}
 	/**
@@ -68,6 +64,13 @@ public class MySurfaceView extends SurfaceView implements Callback, OnCamOpenFin
 	 */
 	public void camStop(){
 		camera.doStop();
+	}
+	/**
+	 * camera switch controller
+	 * @param callback
+	 */
+	public void camSwitch(OnCamOpenFinished callback){
+		camera.doSwitch(callback);
 	}
 	@Override
 	/**
@@ -111,11 +114,5 @@ public class MySurfaceView extends SurfaceView implements Callback, OnCamOpenFin
 	}
 	public void setViewHolder(SurfaceHolder holder) {
 		this.viewHolder = holder;
-	}
-	public EditText getNameTxt() {
-		return nameTxt;
-	}
-	public void setNameTxt(EditText nameTxt) {
-		this.nameTxt = nameTxt;
 	}
 }
