@@ -59,7 +59,7 @@ public class MyArrayAdapter extends ArrayAdapter<Object> {
 			@Override
 			public void onClick(View v) {
 				//position is final
-				Config.imgList.remove(position);
+				Config.playerList.remove(position);
 				//player -1
 				Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()-1);
 				PictureActivity pa = (PictureActivity)context;

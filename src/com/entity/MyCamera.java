@@ -25,6 +25,7 @@ import android.view.SurfaceHolder;
 public class MyCamera implements OnCamTakePicFinished{
 	//camera hardware instance
 	private Camera camera;
+	@Deprecated
 	//bitmap cache
 	private Bitmap bitmap;
 	//camera parameters
@@ -179,7 +180,7 @@ public class MyCamera implements OnCamTakePicFinished{
 	 * CACHE the picture in this function
 	 */
 	public void camPicTaken(){
-		setBitmap(jpegCallback.getBitmap());
+		Bitmap bitmap = jpegCallback.getBitmap();
 		previewing = true;
 		camera.startPreview();
 		Matrix matrix = new Matrix();
@@ -199,9 +200,9 @@ public class MyCamera implements OnCamTakePicFinished{
 		    //rotate pre 90 degree
 		    matrix.preRotate(90);
 		}
-		bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-		bitmap = zoomBitmap(bitmap, 100, 100);
-		Config.imgList.add(bitmap);
+		Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		Bitmap zoomedBitmap = zoomBitmap(newBitmap, 100, 100);
+		Config.playerList.add(new Player(zoomedBitmap));
 		Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()+1);
 	}
 	/**
@@ -250,9 +251,11 @@ public class MyCamera implements OnCamTakePicFinished{
 	public void setcParam(Parameters cParam) {
 		this.cParam = cParam;
 	}
+	@Deprecated
 	public Bitmap getBitmap() {
 		return bitmap;
 	}
+	@Deprecated
 	public void setBitmap(Bitmap bitmap) {
 		this.bitmap = bitmap;
 	}
