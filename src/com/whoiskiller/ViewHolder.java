@@ -9,7 +9,7 @@ import android.widget.TextView;
 public final class ViewHolder{
 	public
 	Button bt;
-	TextView tv;
+	public TextView tv;
 	ImageView ig;
 	public CheckBox cb;
 	int position;

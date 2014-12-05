@@ -72,14 +72,12 @@ public class MyAdapter extends BaseAdapter {
 	            	holder = (ViewHolder) convertView.getTag();
 	            	}
 		 // 设置list中TextView的显示
+		 holder.ig.setBackgroundResource(R.drawable.conan);
+		 holder.cb.setChecked(getIsSelected().get(position));
 		 if(list.get(position)== "1"){
 			 holder.tv.setText(list.get(position));
-			 holder.ig.setBackgroundResource(R.drawable.conan);
-			 holder.cb.setChecked(getIsSelected().get(position));
 		 }else{
-			 holder.tv.setText("Stoped");
-			 holder.ig.setBackgroundResource(R.drawable.conan);
-			 holder.cb.setChecked(getIsSelected().get(position));
+			 holder.tv.setText("Die"); 
 		 }
 		 return convertView;
 	}

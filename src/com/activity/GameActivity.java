@@ -104,23 +104,27 @@ public class GameActivity extends Activity implements OnClickListener{
                     long arg3) {
                 // 取得ViewHolder对象，这样就省去了通过层层的findViewById去实例化我们需要的cb实例的步骤
             	ViewHolder holder = (ViewHolder) arg1.getTag();
-                // 改变CheckBox的状态
-                holder.cb.toggle();
-                // 将CheckBox的选中状况记录下来
-                MyAdapter.getIsSelected().put(arg2, holder.cb.isChecked()); 
-                if(flagchecked != -1)
-                	MyAdapter.getIsSelected().put(flagchecked, false);
-                // 调整选定条目
-                if (holder.cb.isChecked() == true) {
-                	flagchecked = arg2;
-                	//BitmapDrawable bm =new BitmapDrawable(getResources(), config.playerList.get(flagchecked).getPlayerPicture());
-                	//headImg.setBackground(bm);
-                	headImg.setBackgroundResource(R.drawable.conan);
-                } else {
-                	flagchecked = -1;
-                }
-                dataChanged();
-                tv_show.setText("已选中"+arg2+"项");
+            	if(holder.tv.getText() =="1" || config.getCurrentStatus()==config.G_STAT_CHECK){
+	                // 改变CheckBox的状态
+	                holder.cb.toggle();
+	                // 将CheckBox的选中状况记录下来
+	                MyAdapter.getIsSelected().put(arg2, holder.cb.isChecked()); 
+	                if(flagchecked != -1)
+	                	MyAdapter.getIsSelected().put(flagchecked, false);
+	                // 调整选定条目
+	                if (holder.cb.isChecked() == true) {
+	                	flagchecked = arg2;
+	                	//BitmapDrawable bm =new BitmapDrawable(getResources(), config.playerList.get(flagchecked).getPlayerPicture());
+	                	//headImg.setBackground(bm);
+	                	headImg.setBackgroundResource(R.drawable.conan);
+	                } else {
+	                	flagchecked = -1;
+	                }
+	                dataChanged();
+	                tv_show.setText("已选中"+arg2+"项");
+	            }else if(holder.tv.getText() =="Die"){
+	            	//
+	            }
             }
         });
 	}
@@ -186,7 +190,22 @@ public class GameActivity extends Activity implements OnClickListener{
 			 */
 			else if(config.getCurrentStatus() == config.G_STAT_CHECK){
 				if(flagchecked != -1){
-					Toast.makeText(getApplicationContext(), config.playerList.get(flagchecked).getPlayerId()+"",Toast.LENGTH_SHORT).show();
+					String checkedId= "";
+					switch (config.playerList.get(flagchecked).getPlayerId()) {
+						case Player.ID_CIVIL:{
+							checkedId = "Civil";
+							break;
+						}
+						case Player.ID_KILLER:{
+							checkedId = "Killer";
+							break;
+						}
+						case Player.ID_POLICE:{
+							checkedId = "Police";
+							break;
+						}
+					}
+					Toast.makeText(getApplicationContext(), checkedId,Toast.LENGTH_SHORT).show();
 					clearList();
 					fctBtn.setText("天亮");
 					config.setCurrentStatus(config.G_STAT_DAY);
