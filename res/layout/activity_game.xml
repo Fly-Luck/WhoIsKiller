@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+    
+    <Button
+        android:id="@+id/pause"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="0dp"
+        android:text="="
+    />
+    
+    <Button
+        android:id="@+id/condition"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="0dp"
+        android:text="condition" />
+
+	<TextView 
+	    android:id="@+id/tv"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop = "400dp"
+        android:layout_marginLeft = "0dp"
+        android:text=""
+	 />
+	
+	 <Button
+        android:id="@+id/function"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop = "150dp"
+        android:layout_marginLeft = "150dp"
+        android:text="天黑"
+        />
+    
+    <ImageView
+	    android:id="@+id/head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop = "40dp"
+        android:layout_marginLeft = "150dp"
+        android:paddingLeft="40dp"
+        />
+    
+    <Button
+        android:id="@+id/showperson"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop = "240dp"
+        android:layout_marginLeft = "150dp"
+        android:text="显示身份"
+    />
+    <Button
+        android:id="@+id/lines"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop = "340dp"
+        android:layout_marginLeft = "150dp"
+        android:text="法官台词"
+    />
+
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="40dp" >
+    </ListView>
+</RelativeLayout>

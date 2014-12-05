@@ -3,6 +3,10 @@ package com.entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.R.integer;
+import android.app.AlertDialog;
+import android.provider.MediaStore.Audio.Playlists;
+
 /**
  * Entity class of game configurations
  * Singleton pattern
@@ -30,7 +34,7 @@ public class Config {
 	//configurations
 	private int currentDay;
 	private int currentStatus;
-	private int totalPlayers;
+	//private int totalPlayers;
 	private int totalKillers;
 	private int totalCivils;
 	private int totalPolices;
@@ -84,7 +88,7 @@ public class Config {
 	public void restart(){
 		currentDay = 1;
 		currentStatus = G_STAT_INIT;
-		totalPlayers = 0;
+		
 		totalKillers = 0;
 		totalCivils = 0;
 		totalPolices = 0;
@@ -96,6 +100,31 @@ public class Config {
 			player.setPlayerStatus(P_STAT_ALIVE);
 			//reset all identities to civil
 			player.setPlayerId(Player.ID_CIVIL);
+		}
+	}
+	public void testmode(){
+		currentDay = 1;
+		currentStatus = G_STAT_INIT;
+		
+		totalKillers = 3;
+		totalCivils = 3;
+		totalPolices = 3;
+		killersLeft = 3;
+		civilsLeft = 3;
+		policesLeft = 3;
+		playerList.clear();
+		for(int i=0; i<9; i++){
+			playerList.add(new Player());
+		}
+		for(int i=0; i<3; i++){
+			playerList.get(i).setPlayerId(Player.ID_CIVIL);
+		}
+		for(int i=3; i<6;i++)
+			playerList.get(i).setPlayerId(Player.ID_KILLER);
+		for(int i=6; i<9; i++)
+			playerList.get(i).setPlayerId(Player.ID_POLICE);
+		for(Player player:playerList){
+			player.setPlayerStatus(P_STAT_ALIVE);
 		}
 	}
 	/**
@@ -117,7 +146,22 @@ public class Config {
 	 */
 	public void playerDie(int position){
 		if(position > 0 && position < playerList.size()){
-			playerList.get(0).setPlayerStatus(P_STAT_DEAD);
+			playerList.get(position).setPlayerStatus(P_STAT_DEAD);
+			
+			switch (playerList.get(position).getPlayerId()) {
+			case Player.ID_CIVIL:{
+				civilsLeft--;
+				break;
+			}
+			case Player.ID_KILLER:{
+				killersLeft--;
+				break;
+			}
+			case Player.ID_POLICE:{
+				policesLeft--;
+				break;
+			}
+			}
 		}
 	}
 	/**
@@ -134,12 +178,13 @@ public class Config {
 			return R_KILLER_WIN;
 		else return R_PENDING;
 	}
+	/*
 	public int getTotalPlayers() {
 		return totalPlayers;
 	}
 	public void setTotalPlayers(int totalPlayers) {
 		this.totalPlayers = totalPlayers;
-	}
+	}*/
 	public int getCurrentDay() {
 		return currentDay;
 	}

@@ -61,7 +61,7 @@ public class MyArrayAdapter extends ArrayAdapter<Object> {
 				//position is final
 				Config.playerList.remove(position);
 				//player -1
-				Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()-1);
+				//Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()-1);
 				PictureActivity pa = (PictureActivity)context;
 				pa.bindGridAdapter();
 			}

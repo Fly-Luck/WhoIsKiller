@@ -203,7 +203,7 @@ public class MyCamera implements OnCamTakePicFinished{
 		Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 		Bitmap zoomedBitmap = zoomBitmap(newBitmap, 100, 100);
 		Config.playerList.add(new Player(zoomedBitmap));
-		Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()+1);
+		//Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()+1);
 	}
 	/**
 	 * camera switch implementation

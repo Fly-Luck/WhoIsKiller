@@ -9,5 +9,6 @@
     <string name="str_show">Show</string>
     <string name="str_defaultDesc">Default Description</string>
     <string name="title_activity_picture">PictureActivity</string>
+    <string name="title_activity_game">GameActivity</string>
 
 </resources>

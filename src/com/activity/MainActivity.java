@@ -24,9 +24,10 @@ public class MainActivity extends Activity implements OnClickListener{
 	private MySurfaceView sView;
 	private int sViewWidth = 500;
 	private int sViewHeight = 500;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Config.getInstance().restart();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		takePicBtn = (Button) findViewById(R.id.takePicBtn);
@@ -45,7 +46,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.takePicBtn){
-			if(Config.getInstance().getTotalPlayers() == Config.MAX_PLAYERS){
+			if(Config.getInstance().playerList.size() == Config.MAX_PLAYERS){
 				new AlertDialog.Builder(this).setMessage("Maximum players reached!").setTitle("Error").show();
 				return;
 			} else{
@@ -56,8 +57,9 @@ public class MainActivity extends Activity implements OnClickListener{
 			sView.camSwitch(sView);
 		}
 		if(v.getId() == showPicBtn.getId()){
-			showPicBtn.setText(Config.getInstance().getTotalPlayers()+"");
-			startActivity(new Intent(this.getBaseContext(), PictureActivity.class));
+			showPicBtn.setText(Config.getInstance().playerList.size()+"");
+			//startActivity(new Intent(this.getBaseContext(), PictureActivity.class));
+			startActivity(new Intent(this.getBaseContext(), GameActivity.class));
 		}
 	}
 
