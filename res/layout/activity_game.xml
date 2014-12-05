@@ -71,4 +71,14 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="40dp" >
     </ListView>
+    <!-- 
+    <ListView
+        android:id="@+id/lv_id"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="40dp" 
+        >
+    </ListView>
+     -->
 </RelativeLayout>

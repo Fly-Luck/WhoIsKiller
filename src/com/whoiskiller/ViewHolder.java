@@ -10,6 +10,7 @@ public final class ViewHolder{
 	public
 	Button bt;
 	TextView tv;
+	ImageView ig;
 	public CheckBox cb;
 	int position;
 }

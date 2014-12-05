@@ -11,7 +11,12 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
          />
-
+     <ImageView
+        android:id = "@+id/item_ig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+    </ImageView>
     <CheckBox
         android:id="@+id/item_cb"
         android:layout_width="wrap_content"
@@ -21,5 +26,4 @@
         android:focusableInTouchMode="false" 
         android:gravity="center_vertical"
         />
-
 </LinearLayout>

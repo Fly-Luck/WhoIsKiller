@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import com.entity.Config;
 import com.entity.Player;
 import com.whoiskiller.MyAdapter;
+import com.whoiskiller.MyAdapter_img;
 import com.whoiskiller.R;
 import com.whoiskiller.ViewHolder;
-import com.whoiskiller.R.id;
 
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,9 +32,10 @@ import android.widget.Toast;
  *
  */
 public class GameActivity extends Activity implements OnClickListener{
-	private ListView lv;
+	private ListView lv, lv_id;
 	private MyAdapter mAdapter;
-	private ArrayList<String> list;
+	private MyAdapter_img mAdapter_img;
+	private ArrayList<String> list, list_img;
 	private TextView tv_show;// 用于显示选中的条目数
 	private int flagchecked=-1, killed = -1, voted = -1;
 	private Button fctBtn, idBtn, linesBtn, cdtBtn;
@@ -59,18 +60,22 @@ public class GameActivity extends Activity implements OnClickListener{
 	
 	private void initDate() {
 		for (int i = 0; i < config.playerList.size(); i++) {
-			list.add("data" + "   " + i);
+			list.add("1");
+			list_img.add("data—img"+" " +i);
 		}
 	}
-	// 刷新listview和TextView的显示
+
 	private void dataChanged() {
 		mAdapter.notifyDataSetChanged();
 	}
+	
 	private void bind(){
 		/* 实例化各个控件 */
         lv = (ListView) findViewById(R.id.lv);
+        //lv_id = (ListView) findViewById(R.id.lv_id);
         tv_show = (TextView) findViewById(R.id.tv);
         list = new ArrayList<String>();
+        list_img = new ArrayList<String>();
         fctBtn = (Button) findViewById(R.id.function);
         idBtn = (Button) findViewById(R.id.showperson);
         linesBtn = (Button)findViewById(R.id.lines);
@@ -86,9 +91,12 @@ public class GameActivity extends Activity implements OnClickListener{
         initDate();
         // 实例化自定义的MyAdapter
         mAdapter = new MyAdapter(list, this);
+        mAdapter_img = new MyAdapter_img(list_img, this);
+        
         // 绑定Adapter
         lv.setAdapter(mAdapter);
-
+        //lv_id.setAdapter(mAdapter_img);
+        
         // 绑定listView的监听器
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -107,6 +115,7 @@ public class GameActivity extends Activity implements OnClickListener{
                 	flagchecked = arg2;
                 	//BitmapDrawable bm =new BitmapDrawable(getResources(), config.playerList.get(flagchecked).getPlayerPicture());
                 	//headImg.setBackground(bm);
+                	headImg.setBackgroundResource(R.drawable.conan);
                 } else {
                 	flagchecked = -1;
                 }
@@ -117,9 +126,6 @@ public class GameActivity extends Activity implements OnClickListener{
 	}
 
 	public boolean checkIfIsEnd(){
-		//String temp = ""+config.getKillersLeft()+config.getPolicesLeft()+config.getCivilsLeft();
-		//new AlertDialog.Builder(this).setMessage(temp).setTitle("Congratulations!").show();
-		
 		switch (config.getResult()) {
 			case (Config.R_CIVIL_WIN) : {
 				new AlertDialog.Builder(this).setMessage("Civil and Cops Win!").setTitle("Congratulations!").show();
@@ -141,6 +147,11 @@ public class GameActivity extends Activity implements OnClickListener{
 		flagchecked = -1;
 		dataChanged();
 	}
+	private void playerDie(int position) {
+		config.playerDie(position);
+		list.set(position, "0");
+		dataChanged();
+	}
 	
 	@Override
 	public void onClick(View v) {
@@ -156,7 +167,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			 */
 			else if(config.getCurrentStatus() == config.G_STAT_NIGHT){
 				if(flagchecked != -1){
-					config.playerDie(flagchecked);
+					playerDie(flagchecked);
 					if(checkIfIsEnd()){
 						//
 					}else{
@@ -197,7 +208,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			else if(config.getCurrentStatus() == config.G_STAT_VOTE){
 				if(flagchecked != -1){
 					//TODO Vote the player
-					config.playerDie(flagchecked);
+					playerDie(flagchecked);
 					if(checkIfIsEnd()){
 						//TODO
 					}else{
@@ -212,7 +223,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			}
 		}
 		if(v.getId() == R.id.showperson){
-			//TODO
+			mAdapter_img.removeAll();
 		}
 		if(v.getId() == R.id.lines){
 			//TODO

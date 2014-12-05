@@ -9,11 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class MyAdapter extends BaseAdapter {
+public class MyAdapter_img extends BaseAdapter {
 
 	// 填充数据的list
 	private ArrayList<String> list;
@@ -25,7 +24,7 @@ public class MyAdapter extends BaseAdapter {
 	private LayoutInflater inflater = null;
 
 	// 构造器
-	public MyAdapter(ArrayList<String> list, Context context) {
+	public MyAdapter_img(ArrayList<String> list, Context context) {
 		this.context = context;
 		this.list = list;
 	        inflater = LayoutInflater.from(context);
@@ -63,7 +62,6 @@ public class MyAdapter extends BaseAdapter {
 			 // 导入布局并赋值给convertview
 			 convertView = inflater.inflate(R.layout.listviewitem, null);
 			 holder.tv = (TextView) convertView.findViewById(R.id.item_tv);
-			 holder.ig = (ImageView) convertView.findViewById(R.id.item_ig);
 			 holder.cb = (CheckBox) convertView.findViewById(R.id.item_cb);
 			 // 为view设置标签
 	            convertView.setTag(holder);
@@ -72,15 +70,9 @@ public class MyAdapter extends BaseAdapter {
 	            	holder = (ViewHolder) convertView.getTag();
 	            	}
 		 // 设置list中TextView的显示
-		 if(list.get(position)== "1"){
-			 holder.tv.setText(list.get(position));
-			 holder.ig.setBackgroundResource(R.drawable.conan);
-			 holder.cb.setChecked(getIsSelected().get(position));
-		 }else{
-			 holder.tv.setText("Stoped");
-			 holder.ig.setBackgroundResource(R.drawable.conan);
-			 holder.cb.setChecked(getIsSelected().get(position));
-		 }
+		 holder.tv.setText(list.get(position));
+		 // 根据isSelected来设置checkbox的选中状况
+		 holder.cb.setChecked(getIsSelected().get(position));//此处只能进行单次运行，不可进行循环或多次设置。
 		 return convertView;
 	}
 
@@ -90,8 +82,11 @@ public class MyAdapter extends BaseAdapter {
 	
 
 	public static void setIsSelected(HashMap<Integer,Boolean> isSelected) {
-	        MyAdapter.isSelected = isSelected;
+	        MyAdapter_img.isSelected = isSelected;
 	    }
-	
+	public void removeAll(){
+		list.clear();
+		notifyDataSetChanged();
+	}
 	
 }

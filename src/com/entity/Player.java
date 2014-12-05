@@ -1,6 +1,7 @@
 package com.entity;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 /**
  * Entity class of player variables
@@ -34,7 +35,12 @@ public class Player {
 		playerId = ID_CIVIL;
 		playerSeat = 0;
 		playerStatus = Config.P_STAT_ALIVE;
-		playerPicture = null;		
+		//Changed
+		Bitmap.Config conf = Bitmap.Config.ARGB_8888;
+		Bitmap bmp = Bitmap.createBitmap(200, 200, conf);
+		playerPicture = bmp;		
+		//Before
+		//playerPicture = null;
 	}
 	public int getPlayerId() {
 		return playerId;

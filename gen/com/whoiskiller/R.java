@@ -27,20 +27,21 @@ public final class R {
         public static final int remove=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f080013;
+        public static final int action_settings=0x7f080014;
         public static final int condition=0x7f080001;
         public static final int function=0x7f080003;
         public static final int head=0x7f080004;
-        public static final int item_cb=0x7f08000f;
+        public static final int item_cb=0x7f080010;
+        public static final int item_ig=0x7f08000f;
         public static final int item_tv=0x7f08000e;
         public static final int lines=0x7f080006;
         public static final int ll=0x7f08000c;
         public static final int lv=0x7f080007;
-        public static final int p1=0x7f080010;
+        public static final int p1=0x7f080011;
         public static final int pause=0x7f080000;
         public static final int playerGrid=0x7f08000d;
-        public static final int playerPic=0x7f080011;
-        public static final int remBtn=0x7f080012;
+        public static final int playerPic=0x7f080012;
+        public static final int remBtn=0x7f080013;
         public static final int sView=0x7f080008;
         public static final int showPicBtn=0x7f08000b;
         public static final int showperson=0x7f080005;
