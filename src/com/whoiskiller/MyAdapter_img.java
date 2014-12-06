@@ -7,6 +7,7 @@ import com.entity.Config;
 import com.entity.Player;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,36 +62,40 @@ public class MyAdapter_img extends BaseAdapter {
 	 public View getView(int position, View convertView, ViewGroup parent) {
 		 ViewHolder_id holder = null;
 		 if (convertView == null) {
-			 // 获得ViewHolder对象
 			 holder = new ViewHolder_id();
 			 // 导入布局并赋值给convertview
 			 convertView = inflater.inflate(R.layout.listviewpic, null);
 			 holder.ig_head = (ImageView) convertView.findViewById(R.id.item_ig_head);
 			 holder.ig_id = (ImageView) convertView.findViewById(R.id.item_ig_id);
 			 // 为view设置标签
-	            convertView.setTag(holder);
-	            } else {
+	         convertView.setTag(holder);
+	         } else {
 	            	// 取出holder
 	            	holder = (ViewHolder_id) convertView.getTag();
-	            	}
-		 // 设置list中TextView的显示
-		 holder.ig_head.setBackgroundResource(R.drawable.conan);
+	         }
+		 
+		 BitmapDrawable bm =new BitmapDrawable(Config.playerList.get(position).getPlayerPicture());
+		 holder.ig_head.setBackground(bm);
+		 //holder.ig_head.setBackgroundResource(R.drawable.conan);
 		 switch (Config.playerList.get(position).getPlayerId()) {
+		 	case(Player.ID_JUDGE):{
+				holder.ig_id.setBackgroundResource(R.drawable.voice);
+		 		break;
+		 	}
 		 	case (Player.ID_CIVIL):{
-				holder.ig_id.setBackgroundResource(R.drawable.conan);
+				holder.ig_id.setBackgroundResource(R.drawable.civil_big);
 		 		break;
 			}
 		 	case (Player.ID_KILLER):{
-				holder.ig_id.setBackgroundResource(R.drawable.ic_launcher);
+				holder.ig_id.setBackgroundResource(R.drawable.killer_big);
 		 		break;
 			}
 		 	case (Player.ID_POLICE):{
-				holder.ig_id.setBackgroundResource(R.drawable.remove);
+				holder.ig_id.setBackgroundResource(R.drawable.police_big);
 		 		break;
 			}
 		 	
 		}
-
 		 return convertView;
 	}
 

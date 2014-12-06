@@ -3,7 +3,11 @@ package com.whoiskiller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.entity.Config;
+import com.entity.Player;
+
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,8 +66,9 @@ public class MyAdapter extends BaseAdapter {
 			 holder = new ViewHolder();
 			 // 导入布局并赋值给convertview
 			 convertView = inflater.inflate(R.layout.listviewitem, null);
-			 holder.tv = (TextView) convertView.findViewById(R.id.item_tv);
+			
 			 holder.ig = (ImageView) convertView.findViewById(R.id.item_ig);
+			 holder.ig2 = (ImageView) convertView.findViewById(R.id.item_dis);
 			 holder.cb = (CheckBox) convertView.findViewById(R.id.item_cb);
 			 // 为view设置标签
 	            convertView.setTag(holder);
@@ -71,14 +76,39 @@ public class MyAdapter extends BaseAdapter {
 	            	// 取出holder
 	            	holder = (ViewHolder) convertView.getTag();
 	            	}
-		 // 设置list中TextView的显示
-		 holder.ig.setBackgroundResource(R.drawable.conan);
+
 		 holder.cb.setChecked(getIsSelected().get(position));
-		 if(list.get(position)== "1"){
-			 holder.tv.setText(list.get(position));
+		 if(list.get(position).charAt(0) == '1'){
+			 holder.iflive = 1;
+			 BitmapDrawable bm =new BitmapDrawable(Config.playerList.get(position).getPlayerPicture());
+			 holder.ig.setBackground(bm);
 		 }else{
-			 holder.tv.setText("Die"); 
+			 holder.iflive = 0; 
+			 holder.ig.setBackgroundResource(R.drawable.skull);
 		 }
+		 if(list.get(position).charAt(2) == '1'){
+			 switch (Config.playerList.get(position).getPlayerId()) {
+			 	case(Player.ID_JUDGE):{
+					holder.ig2.setBackgroundResource(R.drawable.voice);
+			 		break;
+			 	}
+			 	case (Player.ID_CIVIL):{
+					holder.ig2.setBackgroundResource(R.drawable.civil_big);
+			 		break;
+				}
+			 	case (Player.ID_KILLER):{
+					holder.ig2.setBackgroundResource(R.drawable.killer_big);
+			 		break;
+				}
+			 	case (Player.ID_POLICE):{
+					holder.ig2.setBackgroundResource(R.drawable.police_big);
+			 		break;
+				}
+			 }
+		}else{
+			 holder.ig2.setBackgroundResource(R.drawable.yes);
+		 }
+		 
 		 return convertView;
 	}
 

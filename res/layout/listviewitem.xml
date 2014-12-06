@@ -17,6 +17,12 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
     </ImageView>
+    <ImageView
+        android:id = "@+id/item_dis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+    </ImageView>
     <CheckBox
         android:id="@+id/item_cb"
         android:layout_width="wrap_content"

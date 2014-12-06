@@ -1,6 +1,5 @@
 package com.activity;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -36,7 +35,8 @@ public class GameActivity extends Activity implements OnClickListener{
 	private ListView lv, lv_id;
 	private MyAdapter mAdapter;
 	private MyAdapter_img mAdapter_img;
-	private ArrayList<String> list, list_img;
+	private ArrayList<String> list;
+	private ArrayList<String>list_img;
 	private TextView tv_show;// 用于显示选中的条目数
 	private int flagchecked=-1, killed = -1;
 	private Button fctBtn, idBtn, linesBtn, cdtBtn, pusBtn;
@@ -75,7 +75,6 @@ public class GameActivity extends Activity implements OnClickListener{
         idBtn = (Button) findViewById(R.id.showperson);
         linesBtn = (Button)findViewById(R.id.lines);
         cdtBtn = (Button) findViewById(R.id.condition);
-		
         fctBtn.setOnClickListener(this);
         pusBtn.setOnClickListener(this);
         idBtn.setOnTouchListener(buttonListener_id);
@@ -90,10 +89,10 @@ public class GameActivity extends Activity implements OnClickListener{
 	 * 
 	 */
 	private void initialList(){
-		//config.testmode();
 		// 为Adapter准备数据
 		for (int i = 0; i < Config.playerList.size(); i++) {
-			list.add("1");
+			/*第一个1代表死否死亡，第二个1表示是否选中, 第三个表示是否显示身份*/
+			list.add("110");
 			list_img.add("1");
 		}
         // 实例化自定义的MyAdapter
@@ -110,22 +109,24 @@ public class GameActivity extends Activity implements OnClickListener{
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                     long arg3) {
                 ViewHolder holder = (ViewHolder) arg1.getTag();
-            	if(holder.tv.getText() =="1" || config.getCurrentStatus()==Config.G_STAT_CHECK){
+            	if(holder.iflive == 1 || config.getCurrentStatus()==Config.G_STAT_CHECK){
 	                holder.cb.toggle();
 	                MyAdapter.getIsSelected().put(arg2, holder.cb.isChecked()); 
 	                if(flagchecked != -1)
 	                	MyAdapter.getIsSelected().put(flagchecked, false);
 	                if (holder.cb.isChecked() == true) {
+	                	
 	                	flagchecked = arg2;
 	                	BitmapDrawable bm =new BitmapDrawable(getResources(), Config.playerList.get(flagchecked).getPlayerPicture());
 	                	headImg.setBackground(bm);
-	                	//headImg.setBackgroundResource(R.drawable.conan);
 	                } else {
 	                	flagchecked = -1;
 	                }
 	                dataChanged();
 	                tv_show.setText("已选中"+arg2+"项");
-	            }else if(holder.tv.getText() =="Die"){
+	                
+	                tv_show.setText(""+config.getCivilsLeft() + config.getKillersLeft() + config.getPolicesLeft());
+	            }else if(holder.iflive ==0) {
 	            	//
 	            }
             }
@@ -165,7 +166,8 @@ public class GameActivity extends Activity implements OnClickListener{
 	 */
 	private void playerDie(int position) {
 		config.playerDie(position);
-		list.set(position, "0");
+		String temp = list.get(position);
+		list.set(position,"0"+temp.substring(1));
 		dataChanged();
 	}
 	
@@ -179,7 +181,6 @@ public class GameActivity extends Activity implements OnClickListener{
 		 * function button
 		 * 
 		 */
-		
 		if(v.getId() == R.id.function){
 			if(config.getCurrentStatus() == -1){
 				Toast.makeText(getApplicationContext(), "GameStart",Toast.LENGTH_SHORT).show();
@@ -317,13 +318,21 @@ public class GameActivity extends Activity implements OnClickListener{
 	 * 显示提示身份的Dialog
 	 */
 	private void openIdDialog() {
-		if(flag==0){
-			builder.setView(lv_id);
-			alert = builder.show();
-			flag++;
-		}else{
-			alert.show();
+		int i=0;
+		for(i=0; i<list.size(); i++){
+
+			String temp = list.get(i);
+			list.set(i,temp.substring(0, 2)+"1");
 		}
+		dataChanged();
+	}
+	private void closeIdDialog(){
+		int i=0;
+		for(i=0; i<list.size(); i++){
+			String temp = list.get(i);
+			list.set(i,temp.substring(0,2)+"0");
+		}
+		dataChanged();
 	}
 	/**
 	 * 显示每个人身份的函数
@@ -336,7 +345,8 @@ public class GameActivity extends Activity implements OnClickListener{
 			 if (action == MotionEvent.ACTION_DOWN) {
 				 openIdDialog();
 			  } else if (action == MotionEvent.ACTION_UP) {   
-				  alert.dismiss();
+				  //alert.dismiss();
+				  closeIdDialog();
 			  }
 			return false;
 		}  
