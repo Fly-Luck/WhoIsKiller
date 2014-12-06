@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 /**
- * Adapter to provide data for gridview
+ * Adapter to provide data for gridview or listview
  * @author Luck
  *
  */
@@ -32,12 +32,15 @@ public class MyArrayAdapter extends ArrayAdapter<Object> {
 	private int textViewResourceId;
 	//data to feed the gridview
 	private ArrayList<Object> objects;
+	//view type
+	private int type;
 	public MyArrayAdapter(Context context, int textViewResourceId,
-			List<Object> objects) {
+			List<Object> objects, int type) {
 		super(context, textViewResourceId, objects);
 		this.context = context;
 		this.textViewResourceId = textViewResourceId;
 		this.objects = (ArrayList<Object>) objects;
+		this.type = type;
 	}
 	
 	@Override
@@ -52,21 +55,28 @@ public class MyArrayAdapter extends ArrayAdapter<Object> {
 			convertView = (RelativeLayout) convertView;
 		}
 		Object item = objects.get(position);
-		ImageView img = (ImageView) convertView.findViewById(R.id.playerPic);
-		Button btn = (Button) convertView.findViewById(R.id.remBtn);
-		btn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				//position is final
-				Config.playerList.remove(position);
-				//player -1
-				//Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()-1);
-				PictureActivity pa = (PictureActivity)context;
-				pa.bindGridAdapter();
-			}
-		});
-		img.setImageBitmap((Bitmap) item);
+		ImageView img;
+		if(type == 1){
+			img = (ImageView) convertView.findViewById(R.id.playerPic);
+			Button btn = (Button) convertView.findViewById(R.id.remBtn);
+			btn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					//position is final
+					Config.playerList.remove(position);
+					//player -1
+					//Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()-1);
+					PictureActivity pa = (PictureActivity)context;
+					pa.bindGridAdapter();
+				}
+			});
+			img.setImageBitmap((Bitmap) item);
+		} else{
+			img = (ImageView) convertView.findViewById(R.id.playerPic_judge);
+			img.setImageBitmap((Bitmap)item);
+		}
+
 		return convertView;
 	}
 }

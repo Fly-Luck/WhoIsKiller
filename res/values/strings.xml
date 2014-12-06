@@ -10,5 +10,7 @@
     <string name="str_defaultDesc">Default Description</string>
     <string name="title_activity_picture">PictureActivity</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_judge_select">JudgeSelectActivity</string>
+    <string name="title_activity_role_assign">RoleAssignActivity</string>
 
 </resources>

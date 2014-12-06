@@ -23,7 +23,7 @@ public class MyAdapter extends BaseAdapter {
 	private Context context;
 	// 用来导入布局
 	private LayoutInflater inflater = null;
-
+ 
 	// 构造器
 	public MyAdapter(ArrayList<String> list, Context context) {
 		this.context = context;

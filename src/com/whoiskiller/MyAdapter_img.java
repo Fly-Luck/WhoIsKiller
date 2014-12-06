@@ -3,12 +3,16 @@ package com.whoiskiller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.entity.Config;
+import com.entity.Player;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -55,24 +59,38 @@ public class MyAdapter_img extends BaseAdapter {
 
 	 @Override
 	 public View getView(int position, View convertView, ViewGroup parent) {
-		 ViewHolder holder = null;
+		 ViewHolder_id holder = null;
 		 if (convertView == null) {
 			 // 获得ViewHolder对象
-			 holder = new ViewHolder();
+			 holder = new ViewHolder_id();
 			 // 导入布局并赋值给convertview
-			 convertView = inflater.inflate(R.layout.listviewitem, null);
-			 holder.tv = (TextView) convertView.findViewById(R.id.item_tv);
-			 holder.cb = (CheckBox) convertView.findViewById(R.id.item_cb);
+			 convertView = inflater.inflate(R.layout.listviewpic, null);
+			 holder.ig_head = (ImageView) convertView.findViewById(R.id.item_ig_head);
+			 holder.ig_id = (ImageView) convertView.findViewById(R.id.item_ig_id);
 			 // 为view设置标签
 	            convertView.setTag(holder);
 	            } else {
 	            	// 取出holder
-	            	holder = (ViewHolder) convertView.getTag();
+	            	holder = (ViewHolder_id) convertView.getTag();
 	            	}
 		 // 设置list中TextView的显示
-		 holder.tv.setText(list.get(position));
-		 // 根据isSelected来设置checkbox的选中状况
-		 holder.cb.setChecked(getIsSelected().get(position));//此处只能进行单次运行，不可进行循环或多次设置。
+		 holder.ig_head.setBackgroundResource(R.drawable.conan);
+		 switch (Config.playerList.get(position).getPlayerId()) {
+		 	case (Player.ID_CIVIL):{
+				holder.ig_id.setBackgroundResource(R.drawable.conan);
+		 		break;
+			}
+		 	case (Player.ID_KILLER):{
+				holder.ig_id.setBackgroundResource(R.drawable.ic_launcher);
+		 		break;
+			}
+		 	case (Player.ID_POLICE):{
+				holder.ig_id.setBackgroundResource(R.drawable.remove);
+		 		break;
+			}
+		 	
+		}
+
 		 return convertView;
 	}
 
@@ -84,9 +102,6 @@ public class MyAdapter_img extends BaseAdapter {
 	public static void setIsSelected(HashMap<Integer,Boolean> isSelected) {
 	        MyAdapter_img.isSelected = isSelected;
 	    }
-	public void removeAll(){
-		list.clear();
-		notifyDataSetChanged();
-	}
+	
 	
 }

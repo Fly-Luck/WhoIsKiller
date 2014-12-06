@@ -21,9 +21,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <!-- android:theme="@android:style/Theme.NoTitleBar" -->
-         
-         
+
         <activity
             android:name="com.activity.GameActivity"
             android:label="@string/title_activity_picture" >
@@ -33,12 +33,21 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.activity.PictureActivity"
             android:label="@string/title_activity_picture" >
+        </activity>
+        <activity
+            android:name="com.activity.JudgeSelectActivity"
+            android:label="@string/title_activity_judge_select" >
+        </activity>
+        <activity
+            android:name="com.activity.RoleAssignActivity"
+            android:label="@string/title_activity_role_assign" >
         </activity>
     </application>
 

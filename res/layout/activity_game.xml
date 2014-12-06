@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+    tools:context="${relativePackage}.${activityClass}" 
+    android:background="#D4929A">
     
     <Button
         android:id="@+id/pause"
@@ -18,7 +19,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="0dp"
-        android:text="condition" />
+        android:text="夜幕降临" />
 
 	<TextView 
 	    android:id="@+id/tv"
@@ -49,19 +50,19 @@
     
     <Button
         android:id="@+id/showperson"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:layout_marginTop = "240dp"
-        android:layout_marginLeft = "150dp"
-        android:text="显示身份"
-    />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="240dp"
+        android:background="@drawable/show_identity" />
+
     <Button
         android:id="@+id/lines"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop = "340dp"
         android:layout_marginLeft = "150dp"
-        android:text="法官台词"
+        android:background="@drawable/voice" 
     />
 
     <ListView
@@ -71,14 +72,4 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="40dp" >
     </ListView>
-    <!-- 
-    <ListView
-        android:id="@+id/lv_id"
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="40dp" 
-        >
-    </ListView>
-     -->
 </RelativeLayout>
