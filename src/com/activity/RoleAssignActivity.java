@@ -45,40 +45,8 @@ public class RoleAssignActivity extends Activity implements OnClickListener{
 		nextBtn.setOnClickListener(this);
 		stage = STAGE_PASS;
 		curPos = 0;
-		genRandomIds();
+		Config.getInstance().assignIds();
 		passPhone();
-	}
-	private void genRandomIds() {
-		int total = Config.playerList.size() - 1;
-		int killers = total/3;
-		int polices = killers;
-		Config.getInstance().setKillersLeft(killers);
-		Config.getInstance().setPolicesLeft(polices);
-		Config.getInstance().setCivilsLeft(total - killers - polices);
-		ArrayList<Integer> randomPos = new ArrayList<Integer>();
-		int jdgPos = -1;
-		for(Player player: Config.playerList){
-			if(player.getPlayerId() == Player.ID_JUDGE){
-				jdgPos = Config.playerList.indexOf(player);
-				break;
-			}
-		}
-		for(int i=0;i<Config.playerList.size();i++){
-			if(jdgPos == i)
-				continue;
-			randomPos.add(i);
-		}
-		Collections.shuffle(randomPos);
-		for(int i=0;i<randomPos.size();i++){
-			int pos = randomPos.get(i);
-			if(Config.playerList.get(pos).getPlayerId() == Player.ID_JUDGE)
-				continue;
-			if(i < killers){
-				Config.playerList.get(pos).setPlayerId(Player.ID_KILLER);
-			} else if(i < killers + polices){
-				Config.playerList.get(pos).setPlayerId(Player.ID_POLICE);
-			}
-		}
 	}
 	private void passPhone(){
 		hintTxt.setText("Please pass the phone to");

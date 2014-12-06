@@ -32,7 +32,7 @@ public class PictureActivity extends Activity implements OnClickListener{
 	public void bindGridAdapter(){
 		playerGrid = (GridView) findViewById(R.id.playerGrid);		
 		ArrayList<Object> playerPics = new ArrayList<Object>();
-		for (Player player : Config.playerList) {
+		for (Player player : Config.getInstance().playerList) {
 			playerPics.add(player.getPlayerPicture());
 		}
 		MyArrayAdapter adapter = new MyArrayAdapter(PictureActivity.this, R.layout.players, playerPics, 1);

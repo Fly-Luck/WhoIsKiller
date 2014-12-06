@@ -1,6 +1,7 @@
 package com.entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import android.R.integer;
@@ -83,7 +84,7 @@ public class Config {
 		return imgCache.containsKey(name);
 	}
 	/**
-	 * Reset configurations
+	 * Reset configurations to INIT status
 	 */
 	public void restart(){
 		currentDay = 1;
@@ -95,17 +96,55 @@ public class Config {
 		killersLeft = 0;
 		civilsLeft = 0;
 		policesLeft = 0;
-		for (Player player: playerList) {
-			//respawn all
+	}
+	/**
+	 * Replay - same players, identities reset
+	 * Should jump to JudgeSelectActivity or InitActivity
+	 */
+	public void replay(){
+		for (Player player : playerList) {
 			player.setPlayerStatus(P_STAT_ALIVE);
-			//reset all identities to civil
 			player.setPlayerId(Player.ID_CIVIL);
+		}
+	}
+	/**
+	 * Assign random ids to players
+	 */
+	public void assignIds() {
+		int total = playerList.size() - 1;
+		int killers = total/3;
+		int polices = killers;
+		Config.getInstance().setKillersLeft(killers);
+		Config.getInstance().setPolicesLeft(polices);
+		Config.getInstance().setCivilsLeft(total - killers - polices);
+		ArrayList<Integer> randomPos = new ArrayList<Integer>();
+		int jdgPos = -1;
+		for(Player player: playerList){
+			if(player.getPlayerId() == Player.ID_JUDGE){
+				jdgPos = playerList.indexOf(player);
+				break;
+			}
+		}
+		for(int i=0;i<playerList.size();i++){
+			if(jdgPos == i)
+				continue;
+			randomPos.add(i);
+		}
+		Collections.shuffle(randomPos);
+		for(int i=0;i<randomPos.size();i++){
+			int pos = randomPos.get(i);
+			if(playerList.get(pos).getPlayerId() == Player.ID_JUDGE)
+				continue;
+			if(i < killers){
+				playerList.get(pos).setPlayerId(Player.ID_KILLER);
+			} else if(i < killers + polices){
+				playerList.get(pos).setPlayerId(Player.ID_POLICE);
+			}
 		}
 	}
 	public void testmode(){
 		currentDay = 1;
 		currentStatus = G_STAT_INIT;
-		
 		totalKillers = 3;
 		totalCivils = 3;
 		totalPolices = 3;
