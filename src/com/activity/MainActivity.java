@@ -60,9 +60,6 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 			if(Config.getInstance().playerList.size() == Config.MAX_PLAYERS){
 				new AlertDialog.Builder(this).setMessage("Maximum players reached!").setTitle("Error").show();
 				return;
-			} else if(Config.playerList.size() < 7){
-				new AlertDialog.Builder(this).setMessage("Minimum players is 7!").setTitle("Error").show();
-				return;
 			} else{
 				sView.camTakePic();
 			}
@@ -71,6 +68,10 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 			sView.camSwitch(sView);
 		}
 		if(v.getId() == showPicBtn.getId()){
+			if(Config.playerList.size() < 7){
+				new AlertDialog.Builder(this).setMessage("Minimum players is 7!").setTitle("Error").show();
+				return;
+			}
 			startActivity(new Intent(this.getBaseContext(), JudgeSelectActivity.class));
 		}
 	}

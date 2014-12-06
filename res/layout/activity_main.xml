@@ -27,14 +27,14 @@
     	    android:layout_height="wrap_content"
     	    android:layout_gravity="center_horizontal">
 		    <ImageView 
-		        android:id="@+id/takePicBtn"
+		        android:id="@+id/switchBtn"
 		        android:layout_width="50dip"
 		        android:layout_height="50dip"
 		        android:layout_gravity="left|center_vertical"
 		        android:src="@drawable/switch_camera"/>  
 
 		    <ImageView
-		        android:id="@+id/switchBtn"
+		        android:id="@+id/takePicBtn"
 		        android:layout_width="50dip"
 		        android:layout_height="50dip"
 		        android:layout_gravity="right|center_vertical" 
@@ -57,9 +57,11 @@
 		    android:text="Now we have 0 players"/>
 	    <ImageView
 	        android:id="@+id/showPicBtn"  
-	        android:layout_width="fill_parent"  
-	        android:layout_height="wrap_content"  
+	        android:layout_width="40dip"  
+	        android:layout_height="40dip"  
+	        android:layout_gravity="center_horizontal"
 	        android:layout_marginBottom="15dp"  
+	        android:scaleType="centerInside"
 		    android:layout_weight="1"
-	        android:text="@string/str_show" />
+	        android:src="@drawable/yes"/>
 </LinearLayout>
