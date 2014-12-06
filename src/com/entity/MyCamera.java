@@ -3,6 +3,7 @@ package com.entity;
 import java.io.IOException;
 import java.util.List;
 
+import com.activity.MainActivity;
 import com.intf.OnCamOpenFinished;
 import com.intf.OnCamTakePicFinished;
 import com.listener.MyPictureCallback;
@@ -203,6 +204,7 @@ public class MyCamera implements OnCamTakePicFinished{
 		Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 		Bitmap zoomedBitmap = zoomBitmap(newBitmap, 100, 100);
 		Config.playerList.add(new Player(zoomedBitmap));
+		MainActivity.refreshPlayerNum();
 		//Config.getInstance().setTotalPlayers(Config.getInstance().getTotalPlayers()+1);
 	}
 	/**

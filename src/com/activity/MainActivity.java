@@ -48,6 +48,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		params.height = sViewHeight;
 		params.width = sViewWidth;
 		sView.setLayoutParams(params);
+		refreshPlayerNum();
 	}
 	
 	public static void refreshPlayerNum(){
@@ -56,7 +57,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	
 	@Override
 	public void onClick(View v) {
-		if(v.getId() == R.id.takePicBtn){
+		if(v.equals(takePicBtn)){
 			if(Config.getInstance().playerList.size() == Config.MAX_PLAYERS){
 				new AlertDialog.Builder(this).setMessage("Maximum players reached!").setTitle("Error").show();
 				return;
@@ -64,7 +65,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 				sView.camTakePic();
 			}
 		}
-		if(v.getId() == R.id.switchBtn){
+		if(v.equals(switchBtn)){
 			sView.camSwitch(sView);
 		}
 		if(v.getId() == showPicBtn.getId()){
