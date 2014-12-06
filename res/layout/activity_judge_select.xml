@@ -6,6 +6,9 @@
 	<ListView android:id="@+id/jdgSelList"
 	    android:layout_height="wrap_content"
 	    android:layout_width="150dip"/>
-	<Button android:id="@+id/jdgSelBtn"/>
+	<Button android:id="@+id/jdgSelBtn"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Select"/>
 	    
 </RelativeLayout>
