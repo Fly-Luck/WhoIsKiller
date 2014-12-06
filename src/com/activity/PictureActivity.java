@@ -35,7 +35,7 @@ public class PictureActivity extends Activity implements OnClickListener{
 		for (Player player : Config.playerList) {
 			playerPics.add(player.getPlayerPicture());
 		}
-		MyArrayAdapter adapter = new MyArrayAdapter(PictureActivity.this, R.layout.players, playerPics);
+		MyArrayAdapter adapter = new MyArrayAdapter(PictureActivity.this, R.layout.players, playerPics, 1);
 		playerGrid.setAdapter(adapter);
 	}
 	@Override
