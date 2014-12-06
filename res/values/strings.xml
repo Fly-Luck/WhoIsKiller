@@ -12,5 +12,7 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_judge_select">JudgeSelectActivity</string>
     <string name="title_activity_role_assign">RoleAssignActivity</string>
+    <string name="title_activity_init">InitActivity</string>
+    <string name="title_activity_author">AuthorActivity</string>
 
 </resources>

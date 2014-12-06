@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.activity.PictureActivity" 
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#D4929A">
 
 	<GridView android:id="@+id/playerGrid"
 	    android:layout_width="fill_parent"

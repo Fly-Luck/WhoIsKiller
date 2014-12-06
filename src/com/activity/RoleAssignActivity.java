@@ -52,6 +52,9 @@ public class RoleAssignActivity extends Activity implements OnClickListener{
 		int total = Config.playerList.size() - 1;
 		int killers = total/3;
 		int polices = killers;
+		Config.getInstance().setKillersLeft(killers);
+		Config.getInstance().setPolicesLeft(polices);
+		Config.getInstance().setCivilsLeft(total - killers - polices);
 		ArrayList<Integer> randomPos = new ArrayList<Integer>();
 		int jdgPos = -1;
 		for(Player player: Config.playerList){
