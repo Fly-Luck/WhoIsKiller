@@ -98,13 +98,13 @@ public class RoleAssignActivity extends Activity implements OnClickListener{
 			break;
 		}
 		stage = STAGE_PASS;
+		curPos++;
 	}
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == R.id.nextBtn){
 			switch (stage) {
 			case STAGE_PASS:
-				curPos++;
 				if(Config.playerList.get(curPos).getPlayerId() == Player.ID_JUDGE)
 					curPos++;
 				if(curPos > Config.playerList.size() - 1)
