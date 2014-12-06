@@ -105,11 +105,11 @@ public class RoleAssignActivity extends Activity implements OnClickListener{
 		if(v.getId() == R.id.nextBtn){
 			switch (stage) {
 			case STAGE_PASS:
-				if(Config.playerList.get(curPos).getPlayerId() == Player.ID_JUDGE)
-					curPos++;
 				if(curPos > Config.playerList.size() - 1)
 					startActivity(new Intent(getBaseContext(), GameActivity.class));
-				else passPhone();
+				else if(Config.playerList.get(curPos).getPlayerId() != Player.ID_JUDGE)
+					passPhone();
+				else curPos++;
 				break;
 			case STAGE_ID:
 				showId();
