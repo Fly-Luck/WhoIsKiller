@@ -2,16 +2,11 @@ package com.entity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-
-import android.R.integer;
-import android.app.AlertDialog;
-import android.provider.MediaStore.Audio.Playlists;
 
 /**
  * Entity class of game configurations
  * Singleton pattern
- * @author Luck
+ * @author Luck(Liu Junjie)
  *
  */
 public class Config {
@@ -42,12 +37,6 @@ public class Config {
 	private int killersLeft;
 	private int civilsLeft;
 	private int policesLeft;
-	@Deprecated
-	//cache map to store image
-	public static HashMap<String, Object> imgCache;
-	@Deprecated
-	//cache list to store image
-	public static ArrayList<Object> imgList;
 	//list of players
 	public static ArrayList<Player> playerList;
 	/**
@@ -64,8 +53,6 @@ public class Config {
 	private Config(){
 		playerList = new ArrayList<Player>();
 		restart();
-		imgCache = new HashMap<String, Object>();
-		imgList = new ArrayList<Object>();
 	}
 	/**
 	 * Singleton instance getter
@@ -73,15 +60,6 @@ public class Config {
 	 */
 	public static Config getInstance(){
 		return ConfigHolder.INSTANCE;
-	}
-	@Deprecated
-	/**
-	 * This is not useful any more for name is no longer identifying a player
-	 * @param name
-	 * @return
-	 */
-	public boolean hasPlayerIn(String name){
-		return imgCache.containsKey(name);
 	}
 	/**
 	 * Reset configurations to INIT status
@@ -102,6 +80,8 @@ public class Config {
 	 * Should jump to JudgeSelectActivity or InitActivity
 	 */
 	public void replay(){
+		currentDay = 1;
+		currentStatus = G_STAT_INIT;
 		for (Player player : playerList) {
 			player.setPlayerStatus(P_STAT_ALIVE);
 			player.setPlayerId(Player.ID_CIVIL);

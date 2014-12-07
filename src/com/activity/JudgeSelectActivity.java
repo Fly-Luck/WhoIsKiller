@@ -1,19 +1,15 @@
 package com.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.entity.Config;
 import com.entity.Player;
 import com.util.MyArrayAdapter;
-import com.whoiskiller.MyAdapter;
 import com.whoiskiller.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,17 +17,12 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.SimpleAdapter.ViewBinder;
 
 /**
  * Judge Selecting Activity
- * @author Luck
+ * @author Luck(Liu Junjie)
  *
  */
 public class JudgeSelectActivity extends Activity implements OnClickListener, OnItemClickListener, OnTouchListener{
@@ -88,7 +79,7 @@ public class JudgeSelectActivity extends Activity implements OnClickListener, On
 				prcdBtn.setImageResource(R.drawable.yes_down);
 				return true;
 			} else if(event.getAction() == MotionEvent.ACTION_UP){
-				prcdBtn.setImageResource(R.drawable.yes_down);
+				prcdBtn.setImageResource(R.drawable.yes);
 				v.performClick();
 				return true;
 			}

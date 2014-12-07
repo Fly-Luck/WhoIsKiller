@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,7 +17,7 @@ import com.entity.MySurfaceView;
 import com.whoiskiller.R;
 /**
  * Picture taking activity
- * @author Luck
+ * @author Luck(Liu Junjie)
  *
  */
 public class MainActivity extends Activity implements OnClickListener, OnTouchListener{
@@ -55,6 +54,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		cameraHint.setText("Now we have "+Config.playerList.size()+" players");
 	}
 	
+	@SuppressWarnings("static-access")
 	@Override
 	public void onClick(View v) {
 		if(v.equals(takePicBtn)){
