@@ -9,7 +9,7 @@ import android.hardware.Camera.PictureCallback;
 
 /**
  * Picture taken callback to provide picture processing functionalities
- * @author Luck(Liu Junjie)
+ * @author Luck
  *
  */
 public class MyPictureCallback implements PictureCallback{

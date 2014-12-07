@@ -15,7 +15,7 @@ import android.widget.GridView;
 
 /**
  * Picture showing & removing activity
- * @author Luck(Liu Junjie)
+ * @author Luck
  *
  */
 public class PictureActivity extends Activity implements OnClickListener{
@@ -29,7 +29,6 @@ public class PictureActivity extends Activity implements OnClickListener{
 	/**
 	 * Bind an ArrayAdapter to the gridview
 	 */
-	@SuppressWarnings("static-access")
 	public void bindGridAdapter(){
 		playerGrid = (GridView) findViewById(R.id.playerGrid);		
 		ArrayList<Object> playerPics = new ArrayList<Object>();

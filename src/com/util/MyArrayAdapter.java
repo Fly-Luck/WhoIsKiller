@@ -21,7 +21,7 @@ import android.widget.RelativeLayout;
 
 /**
  * Adapter to provide data for gridview or listview
- * @author Luck(Liu Junjie)
+ * @author Luck
  *
  */
 public class MyArrayAdapter extends ArrayAdapter<Object> {

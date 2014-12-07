@@ -1,10 +1,11 @@
 package com.entity;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 /**
  * Entity class of player variables
- * @author Luck(Liu Junjie)
+ * @author Luck
  *
  */
 public class Player {
@@ -17,6 +18,8 @@ public class Player {
 	private int playerId;
 	//player seat
 	private int playerSeat;
+	@Deprecated
+	private String playerPic;
 	//player status - dead or alive
 	private int playerStatus;
 	//player picture
@@ -50,6 +53,14 @@ public class Player {
 	}
 	public void setPlayerSeat(int playerSeat) {
 		this.playerSeat = playerSeat;
+	}
+	@Deprecated
+	public String getPlayerPic() {
+		return playerPic;
+	}
+	@Deprecated
+	public void setPlayerPic(String playerPic) {
+		this.playerPic = playerPic;
 	}
 	public int getPlayerStatus() {
 		return playerStatus;

@@ -9,11 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
-/**
- * Init activity of game
- * @author Luck(Liu Junjie)
- *
- */
 public class InitActivity extends Activity implements OnClickListener{
 
 	private ImageView infoBtn, startBtn, playersBtn;
