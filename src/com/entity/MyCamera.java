@@ -20,15 +20,12 @@ import android.view.SurfaceHolder;
 /**
  * Entity class for camera & parameters
  * Singleton pattern
- * @author Luck
+ * @author Luck(Liu Junjie)
  *
  */
 public class MyCamera implements OnCamTakePicFinished{
 	//camera hardware instance
 	private Camera camera;
-	@Deprecated
-	//bitmap cache
-	private Bitmap bitmap;
 	//camera parameters
 	private Parameters cParam;
 	private int preWidth;
@@ -66,7 +63,6 @@ public class MyCamera implements OnCamTakePicFinished{
 		dispOrient = 90;
 		previewing = false;
 		currentCam = 0;
-		bitmap = null;
 		jpegCallback = new MyPictureCallback(this);
 		shutterCallback = new MyShutterCallback();
 	}
@@ -170,7 +166,7 @@ public class MyCamera implements OnCamTakePicFinished{
 	 * camera take picture implementation
 	 */
 	public void doTakePic(){
-		camera.takePicture(shutterCallback, null, null, jpegCallback);
+		camera.takePicture(null, null, null, jpegCallback);
 		previewing = false;
 	}
 	
@@ -252,14 +248,6 @@ public class MyCamera implements OnCamTakePicFinished{
 	}
 	public void setcParam(Parameters cParam) {
 		this.cParam = cParam;
-	}
-	@Deprecated
-	public Bitmap getBitmap() {
-		return bitmap;
-	}
-	@Deprecated
-	public void setBitmap(Bitmap bitmap) {
-		this.bitmap = bitmap;
 	}
 	public int getPreWidth() {
 		return preWidth;

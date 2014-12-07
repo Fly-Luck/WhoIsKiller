@@ -1,13 +1,15 @@
 package com.activity;
 
 import com.whoiskiller.R;
-import com.whoiskiller.R.layout;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
+/**
+ * Activity to show authors
+ * @author Luck(Liu Junjie)
+ *
+ */
 public class AuthorActivity extends Activity {
 
 	@Override
