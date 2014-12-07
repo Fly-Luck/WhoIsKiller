@@ -1,5 +1,6 @@
 package com.activity;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -38,13 +39,13 @@ public class GameActivity extends Activity implements OnClickListener{
 	private ArrayList<String> list;
 	private ArrayList<String>list_img;
 	private TextView tv_show;// 用于显示选中的条目数
-	private int flagchecked=-1, killed = -1;
+	private int flagchecked=-1, killed = -1, flagchecked_player=-1;
 	private Button fctBtn, idBtn, linesBtn, cdtBtn, pusBtn;
 	private static Config config = Config.getInstance();
 	private ImageView headImg;
 	private AlertDialog.Builder builder, builder2;
 	private AlertDialog alert, alert2;
-	private int flag=0;
+	private int flag=0, judgePos;
 	
 	/**
 	 * Start Game
@@ -91,12 +92,16 @@ public class GameActivity extends Activity implements OnClickListener{
 	private void initialList(){
 		// 为Adapter准备数据
 		for (int i = 0; i < Config.playerList.size(); i++) {
-			/*第一个1代表死否死亡，第二个1表示是否选中, 第三个表示是否显示身份*/
-			list.add("110");
+			/*第一个1代表死否活着，第二个1表示是否选中, 第三个表示是否显示身份*/
+			if(config.playerList.get(i).getPlayerId()==Player.ID_JUDGE){
+				judgePos = i;
+			}else{
+				list.add("110");
+			}
 			list_img.add("1");
 		}
         // 实例化自定义的MyAdapter
-        mAdapter = new MyAdapter(list, this);
+        mAdapter = new MyAdapter(list, this, judgePos);
         mAdapter_img = new MyAdapter_img(list_img, this);
         
         // 绑定Adapter
@@ -110,22 +115,28 @@ public class GameActivity extends Activity implements OnClickListener{
                     long arg3) {
                 ViewHolder holder = (ViewHolder) arg1.getTag();
             	if(holder.iflive == 1 || config.getCurrentStatus()==Config.G_STAT_CHECK){
-	                holder.cb.toggle();
+	                holder.cb.setChecked(true);
 	                MyAdapter.getIsSelected().put(arg2, holder.cb.isChecked()); 
-	                if(flagchecked != -1)
+	                if(flagchecked != -1 && flagchecked != arg2){
+	                	yesUp(flagchecked);
 	                	MyAdapter.getIsSelected().put(flagchecked, false);
-	                if (holder.cb.isChecked() == true) {
-	                	
-	                	flagchecked = arg2;
-	                	BitmapDrawable bm =new BitmapDrawable(getResources(), Config.playerList.get(flagchecked).getPlayerPicture());
-	                	headImg.setBackground(bm);
-	                } else {
-	                	flagchecked = -1;
 	                }
+	                //if (holder.cb.isChecked() == true) {
+	                	flagchecked = arg2;
+	                	if(flagchecked>=judgePos)
+	                		flagchecked_player = flagchecked+1;
+	                	else {
+	                		flagchecked_player = flagchecked;
+						}
+	                	BitmapDrawable bm =new BitmapDrawable(getResources(), Config.playerList.get(flagchecked_player).getPlayerPicture());
+	                	headImg.setBackground(bm);
+	                	yesDown(flagchecked);
+	                /*} else {
+	                	flagchecked = -1;
+	                	flagchecked_player = -1;
+	                }*/
 	                dataChanged();
-	                tv_show.setText("已选中"+arg2+"项");
-	                
-	                tv_show.setText(""+config.getCivilsLeft() + config.getKillersLeft() + config.getPolicesLeft());
+	                tv_show.setText("");
 	            }else if(holder.iflive ==0) {
 	            	//
 	            }
@@ -155,8 +166,12 @@ public class GameActivity extends Activity implements OnClickListener{
 		return false;
 	}
 	public void clearList(){
-		MyAdapter.getIsSelected().put(flagchecked, false);
-		flagchecked = -1;
+		if(flagchecked!=-1){
+			MyAdapter.getIsSelected().put(flagchecked, false);
+			yesUp(flagchecked);
+			flagchecked = -1;
+			flagchecked = -1;
+		}
 		dataChanged();
 	}
 	
@@ -164,8 +179,8 @@ public class GameActivity extends Activity implements OnClickListener{
 	 * 玩家死亡函数
 	 * @param position
 	 */
-	private void playerDie(int position) {
-		config.playerDie(position);
+	private void playerDie(int position, int position2) {
+		config.playerDie(position2);
 		String temp = list.get(position);
 		list.set(position,"0"+temp.substring(1));
 		dataChanged();
@@ -185,22 +200,22 @@ public class GameActivity extends Activity implements OnClickListener{
 			if(config.getCurrentStatus() == -1){
 				Toast.makeText(getApplicationContext(), "GameStart",Toast.LENGTH_SHORT).show();
 				cdtBtn.setText("杀手杀人时刻");
-				fctBtn.setText("暗杀");
+				fctBtn.setBackgroundResource(R.drawable.kill);
 				config.setCurrentStatus(Config.G_STAT_NIGHT);
-				clearList();
+				clearList(); 
 			}
 			/* 
 			 * KILL person in NIGHT
 			 */
 			else if(config.getCurrentStatus() ==Config.G_STAT_NIGHT){
 				if(flagchecked != -1){
-					playerDie(flagchecked);
+					playerDie(flagchecked, flagchecked_player);
 					if(checkIfIsEnd()){
 						//
 					}else{
 						config.setCurrentStatus(Config.G_STAT_CHECK);
 						cdtBtn.setText("警察验人杀人时刻");
-						fctBtn.setText("验身");
+						fctBtn.setBackgroundResource(R.drawable.check);
 						killed = flagchecked;
 						clearList();
 					}
@@ -216,7 +231,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			else if(config.getCurrentStatus() == Config.G_STAT_CHECK){
 				if(flagchecked != -1){
 					String checkedId= "";
-					switch (Config.playerList.get(flagchecked).getPlayerId()) {
+					switch (Config.playerList.get(flagchecked_player).getPlayerId()) {
 						case Player.ID_CIVIL:{
 							checkedId = "Civil";
 							break;
@@ -230,9 +245,10 @@ public class GameActivity extends Activity implements OnClickListener{
 							break;
 						}
 					}
-					Toast.makeText(getApplicationContext(), checkedId,Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(), checkedId,Toast.LENGTH_SHORT).show();
+					displayCheckedId(checkedId);
 					clearList();
-					fctBtn.setText("天亮");
+					fctBtn.setBackgroundResource(R.drawable.dawn);
 					cdtBtn.setText("天亮了，告诉大家谁死了吧！");
 					config.setCurrentStatus(Config.G_STAT_DAY);
 				}else{
@@ -246,19 +262,20 @@ public class GameActivity extends Activity implements OnClickListener{
 			 */
 			else if(config.getCurrentStatus() == Config.G_STAT_DAY){
 				clearList();
-				fctBtn.setText("投票");
+				fctBtn.setBackgroundResource(R.drawable.vote);
 				cdtBtn.setText("投票谁是凶手？");
-				Toast.makeText(getApplicationContext(), "今晚死的人是"+killed,Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), "今晚死的人是"+killed,Toast.LENGTH_SHORT).show();
+				displayDeadPerson(killed);
 				config.setCurrentStatus(Config.G_STAT_VOTE);
 			}
 			else if(config.getCurrentStatus() == Config.G_STAT_VOTE){
 				if(flagchecked != -1){
-					playerDie(flagchecked);
+					playerDie(flagchecked, flagchecked_player);
 					if(checkIfIsEnd()){
 					}else{
 						config.setCurrentStatus(Config.G_STAT_INIT);
 						cdtBtn.setText("夜幕降临");
-						fctBtn.setText("天黑");
+						fctBtn.setBackgroundResource(R.drawable.dark);
 						clearList();
 						config.setCurrentDay(config.getCurrentDay()+1);
 					}
@@ -279,6 +296,29 @@ public class GameActivity extends Activity implements OnClickListener{
 	}
 	
 	/**
+	 * 显示被检查的人身份
+	 * 
+	 */
+	private void displayCheckedId(String checkId){
+		String tempString = "";
+		tempString = "这个人的身份是 "+ checkId +" !";
+		AlertDialog.Builder builder = new Builder(GameActivity.this);
+		builder.setMessage(tempString);
+		builder.setTitle("偷偷告诉警察");
+		builder.create().show();
+	}
+	/**
+	 * 显示昨天死亡的人
+	 */
+	private void displayDeadPerson(int people) {
+		String tempString = "";
+		tempString = "昨天死去的是 " + (people+1) +" 号玩家";
+		AlertDialog.Builder builder = new Builder(GameActivity.this);
+		builder.setMessage(tempString);
+		builder.setTitle("法官宣布");
+		builder.create().show();
+	}
+	/**
 	 * 暂停界面
 	 */
 	private void pauseFunction(){
@@ -287,7 +327,6 @@ public class GameActivity extends Activity implements OnClickListener{
 		 builder.setTitle("提示");
 		 builder.create().show();
 	}
-
 
 	/**
 	 * 显示法官台词的函数
@@ -310,8 +349,52 @@ public class GameActivity extends Activity implements OnClickListener{
 	 * 显示法官台词
 	 */
 	private void openLinesDialog(){
-		builder2.setMessage("Lines");
+		String tempMessage = "";
+		switch (config.getCurrentStatus()) {
+			case (Config.G_STAT_CHECK):{
+				tempMessage = "是时候展现警察的慧眼去探寻他们的真实身份了！";
+				break;
+			}case (Config.G_STAT_DAY):{
+				tempMessage = "天亮了";
+				break;
+			}case (Config.G_STAT_INIT):{
+				tempMessage = "游戏开始！";
+				break;
+			}
+			case (Config.G_STAT_KILL):{
+				tempMessage = "请杀手杀人！";
+				break;
+			}case (Config.G_STAT_NIGHT):{
+				tempMessage = "夜幕降临，鬼影重重";
+				break;
+			}case (Config.G_STAT_VOTE):{
+				tempMessage = "选出你们心中的杀手吧！";
+				break;
+			}
+		}
+		builder2.setMessage(tempMessage);
 		alert2 = builder2.show();
+
+	}
+	
+	/**
+	 * 
+	 * 按下去yes的函数
+	 */
+	private void yesDown(int position){
+		String temp = list.get(position);
+		list.set(position,temp.substring(0,1)+"0"+temp.substring(2));
+		dataChanged();
+	}
+	
+	/**
+	 * 取消yes的函数
+	 * 
+	 */
+	private void yesUp(int position){
+		String temp = list.get(position);
+		list.set(position,temp.substring(0,1)+"1"+temp.substring(2));
+		dataChanged();
 	}
 	
 	/**
@@ -320,7 +403,6 @@ public class GameActivity extends Activity implements OnClickListener{
 	private void openIdDialog() {
 		int i=0;
 		for(i=0; i<list.size(); i++){
-
 			String temp = list.get(i);
 			list.set(i,temp.substring(0, 2)+"1");
 		}

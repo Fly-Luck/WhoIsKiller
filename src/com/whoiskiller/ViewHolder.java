@@ -8,8 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public final class ViewHolder{
-	public
-	Button bt;
+	public Button bt;
 	public TextView tv;
 	public ImageView ig;
 	public ImageView ig2;

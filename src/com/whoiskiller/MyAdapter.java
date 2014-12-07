@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.entity.Config;
 import com.entity.Player;
 
+import android.R.integer;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
@@ -27,15 +28,17 @@ public class MyAdapter extends BaseAdapter {
 	private Context context;
 	// 用来导入布局
 	private LayoutInflater inflater = null;
+	private int judgePos;
  
 	// 构造器
-	public MyAdapter(ArrayList<String> list, Context context) {
+	public MyAdapter(ArrayList<String> list, Context context, int judgePos) {
 		this.context = context;
 		this.list = list;
-	        inflater = LayoutInflater.from(context);
-	        isSelected = new HashMap<Integer, Boolean>();
+		this.judgePos = judgePos;
+	    inflater = LayoutInflater.from(context);
+	    isSelected = new HashMap<Integer, Boolean>();
 	        // 初始化数据
-	        initDate();
+	    initDate();
 	    }
 
 	// 初始化isSelected的数据
@@ -60,13 +63,17 @@ public class MyAdapter extends BaseAdapter {
 
 	 @Override
 	 public View getView(int position, View convertView, ViewGroup parent) {
+		 int position_player;
+		 if(position>=judgePos)
+			 position_player = position+1;
+		 else 
+			 position_player = position;
 		 ViewHolder holder = null;
 		 if (convertView == null) {
 			 // 获得ViewHolder对象
 			 holder = new ViewHolder();
 			 // 导入布局并赋值给convertview
 			 convertView = inflater.inflate(R.layout.listviewitem, null);
-			
 			 holder.ig = (ImageView) convertView.findViewById(R.id.item_ig);
 			 holder.ig2 = (ImageView) convertView.findViewById(R.id.item_dis);
 			 holder.cb = (CheckBox) convertView.findViewById(R.id.item_cb);
@@ -76,37 +83,43 @@ public class MyAdapter extends BaseAdapter {
 	            	// 取出holder
 	            	holder = (ViewHolder) convertView.getTag();
 	            	}
-
+		 
 		 holder.cb.setChecked(getIsSelected().get(position));
 		 if(list.get(position).charAt(0) == '1'){
 			 holder.iflive = 1;
-			 BitmapDrawable bm =new BitmapDrawable(Config.playerList.get(position).getPlayerPicture());
+			 BitmapDrawable bm =new BitmapDrawable(Config.playerList.get(position_player).getPlayerPicture());
 			 holder.ig.setBackground(bm);
 		 }else{
 			 holder.iflive = 0; 
 			 holder.ig.setBackgroundResource(R.drawable.skull);
 		 }
+		 if(list.get(position).charAt(1) == '1'){
+			 holder.ifchecked = 1;
+			 holder.ig2.setBackgroundResource(R.drawable.yes);
+		 }else{
+			 holder.ifchecked = 0; 
+			 holder.ig2.setBackgroundResource(R.drawable.yes_down);
+		 }
 		 if(list.get(position).charAt(2) == '1'){
-			 switch (Config.playerList.get(position).getPlayerId()) {
+			 switch (Config.playerList.get(position_player).getPlayerId()) {
 			 	case(Player.ID_JUDGE):{
-					holder.ig2.setBackgroundResource(R.drawable.voice);
 			 		break;
-			 	}
+			 		}
 			 	case (Player.ID_CIVIL):{
 					holder.ig2.setBackgroundResource(R.drawable.civil_big);
 			 		break;
-				}
+			 		}
 			 	case (Player.ID_KILLER):{
 					holder.ig2.setBackgroundResource(R.drawable.killer_big);
 			 		break;
-				}
+			 		}
 			 	case (Player.ID_POLICE):{
 					holder.ig2.setBackgroundResource(R.drawable.police_big);
 			 		break;
-				}
-			 }
-		}else{
-			 holder.ig2.setBackgroundResource(R.drawable.yes);
+			 		}
+			 	}
+			 }else{
+			 //holder.ig2.setBackgroundResource(R.drawable.yes);
 		 }
 		 
 		 return convertView;
@@ -116,7 +129,6 @@ public class MyAdapter extends BaseAdapter {
 		return isSelected;
 	}
 	
-
 	public static void setIsSelected(HashMap<Integer,Boolean> isSelected) {
 	        MyAdapter.isSelected = isSelected;
 	    }
