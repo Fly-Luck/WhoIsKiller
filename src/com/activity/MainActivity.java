@@ -24,6 +24,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	private ImageView takePicBtn;
 	private ImageView showPicBtn;
 	private ImageView switchBtn;
+	private ImageView showPlayerBtn;
 	public static TextView cameraHint;
 	private MySurfaceView sView;
 	private int sViewWidth = 500;
@@ -37,12 +38,14 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		takePicBtn = (ImageView) findViewById(R.id.takePicBtn);
 		showPicBtn = (ImageView) findViewById(R.id.showPicBtn);
 		switchBtn = (ImageView) findViewById(R.id.switchBtn);
+		showPlayerBtn = (ImageView) findViewById(R.id.showPlayersBtn);
 		cameraHint = (TextView) findViewById(R.id.cameraTxt);
 		sView = (MySurfaceView) findViewById(R.id.sView);
 		takePicBtn.setOnClickListener(this);
 		showPicBtn.setOnClickListener(this);
 		showPicBtn.setOnTouchListener(this);
 		switchBtn.setOnClickListener(this);
+		showPlayerBtn.setOnClickListener(this);
 		LayoutParams params = sView.getLayoutParams();
 		params.height = sViewHeight;
 		params.width = sViewWidth;
@@ -74,6 +77,9 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 				return;
 			}
 			startActivity(new Intent(this.getBaseContext(), JudgeSelectActivity.class));
+		}
+		if(v.equals(showPlayerBtn)){
+			startActivity(new Intent(this.getBaseContext(), PictureActivity.class));
 		}
 	}
 

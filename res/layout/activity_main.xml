@@ -64,4 +64,11 @@
 	        android:scaleType="centerInside"
 		    android:layout_weight="1"
 	        android:src="@drawable/yes"/>
+        <ImageView android:id="@+id/showPlayersBtn"
+            android:layout_width="120dip"
+            android:layout_height="20dip"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="3.0dip"
+            android:background="@drawable/players" />	        
+	        
 </LinearLayout>
