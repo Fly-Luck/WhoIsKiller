@@ -104,9 +104,9 @@ public class GameActivity extends Activity implements OnClickListener{
 	 */
 	private void initialList(){
 		// 为Adapter准备数据
-		for (int i = 0; i < config.playerList.size(); i++) {
+		for (int i = 0; i < Config.playerList.size(); i++) {
 			/*第一个1代表死否活着，第二个1表示是否选中, 第三个表示是否显示身份*/
-			if(config.playerList.get(i).getPlayerId()==Player.ID_JUDGE){
+			if(Config.playerList.get(i).getPlayerId()==Player.ID_JUDGE){
 				judgePos = i;
 			}else{
 				list.add("110");
@@ -167,6 +167,7 @@ public class GameActivity extends Activity implements OnClickListener{
 		.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				config.replay();
 				myDialog.dismiss();
 				Intent intent = new Intent(GameActivity.this, InitActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
@@ -179,6 +180,7 @@ public class GameActivity extends Activity implements OnClickListener{
 		.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				config.replay();
 				myDialog.dismiss();
 				Intent intent = new Intent(GameActivity.this, JudgeSelectActivity.class); 
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
@@ -470,6 +472,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					config.replay();
 					myDialog.dismiss();
 					Intent intent = new Intent(GameActivity.this, InitActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
@@ -482,6 +485,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					config.replay();
 					myDialog.dismiss();
 					Intent intent = new Intent(GameActivity.this, JudgeSelectActivity.class); 
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  

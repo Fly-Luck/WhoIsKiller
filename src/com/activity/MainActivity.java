@@ -73,10 +73,10 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 				return;
 			} else{
 				sView.camTakePic();
-			}
+			} 
 		}
 		if(v.equals(switchBtn)){
-			sView.camSwitch(sView);
+			sView.camSwitch(sView); 
 		}
 		if(v.getId() == showPicBtn.getId()){
 			if(Config.playerList.size() < 7){

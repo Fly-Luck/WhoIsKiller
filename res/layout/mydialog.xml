@@ -53,7 +53,7 @@
         android:layout_height="70dp"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft ="20dp"
-        android:background="@drawable/back_icon"
+        android:background="@drawable/back_arrow"
         />
 
     <Button
