@@ -53,7 +53,7 @@ public class GameActivity extends Activity implements OnClickListener{
 	private int flagchecked=-1, killed = -1, flagchecked_player=-1;
 	private Button fctBtn, idBtn, linesBtn, pusBtn;
 	private TextView cdtBtn;
-	private static Config config = Config.getInstance();
+	private static Config config;
 	private ImageView headImg;
 	private AlertDialog.Builder builder, builder2;
 	private AlertDialog alert, alert2;
@@ -95,6 +95,7 @@ public class GameActivity extends Activity implements OnClickListener{
         headImg = (ImageView) findViewById(R.id.head);
         builder = new AlertDialog.Builder(GameActivity.this);
         builder2 = new AlertDialog.Builder(GameActivity.this);
+        config  = Config.getInstance();
     }
 	
 	/**
@@ -103,7 +104,7 @@ public class GameActivity extends Activity implements OnClickListener{
 	 */
 	private void initialList(){
 		// 为Adapter准备数据
-		for (int i = 0; i < Config.playerList.size(); i++) {
+		for (int i = 0; i < config.playerList.size(); i++) {
 			/*第一个1代表死否活着，第二个1表示是否选中, 第三个表示是否显示身份*/
 			if(config.playerList.get(i).getPlayerId()==Player.ID_JUDGE){
 				judgePos = i;
@@ -143,10 +144,6 @@ public class GameActivity extends Activity implements OnClickListener{
 	                	BitmapDrawable bm =new BitmapDrawable(getResources(), Config.playerList.get(flagchecked_player).getPlayerPicture());
 	                	headImg.setBackground(bm);
 	                	yesDown(flagchecked);
-	                /*} else {
-	                	flagchecked = -1;
-	                	flagchecked_player = -1;
-	                }*/
 	                dataChanged();
 	                tv_show.setText("");
 	            }else if(holder.iflive ==0) {
@@ -161,10 +158,51 @@ public class GameActivity extends Activity implements OnClickListener{
 	 * @return boolean
 	 */
 
+	public void win_mydialog(int i){
+		myDialog = new AlertDialog.Builder(GameActivity.this).create();
+		myDialog.show();
+		myDialog.getWindow().setContentView(R.layout.win_mydialog);
+		myDialog.getWindow()
+		.findViewById(R.id.button_home2)
+		.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				myDialog.dismiss();
+				Intent intent = new Intent(GameActivity.this, InitActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+				startActivity(intent);  	
+			}
+		});
+		
+		myDialog.getWindow()
+		.findViewById(R.id.button_restart2)
+		.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				myDialog.dismiss();
+				Intent intent = new Intent(GameActivity.this, JudgeSelectActivity.class); 
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+				startActivity(intent);  
+			}
+		});
+		if(i==Config.R_CIVIL_WIN){
+			myDialog.getWindow()
+			.findViewById(R.id.pic2)
+			.setBackgroundResource(R.drawable.civil_win);
+		}
+		if(i==Config.R_KILLER_WIN){
+			myDialog.getWindow()
+			.findViewById(R.id.pic2)
+			.setBackgroundResource(R.drawable.killer_win);
+		}
+	}
+	
+	
 	public boolean checkIfIsEnd(){
 		switch (config.getResult()) {
 			case (Config.R_CIVIL_WIN) : {
-				AlertDialog.Builder builder = new Builder(GameActivity.this);
+				win_mydialog(Config.R_CIVIL_WIN);
+				/*AlertDialog.Builder builder = new Builder(GameActivity.this);
 				ImageView view = new ImageView(this);
 				Bitmap pic_win_civil = BitmapFactory.decodeResource(getResources(), R.drawable.civil_win);
 				Matrix matrix = new Matrix();
@@ -194,10 +232,12 @@ public class GameActivity extends Activity implements OnClickListener{
 				builder.setView(view);
 				builder.setTitle("Congratulations!");
 				builder.create().show();
-				
+				*/
 				return true;
 			}
 			case(Config.R_KILLER_WIN):{
+				win_mydialog(Config.R_KILLER_WIN);
+				/*
 				AlertDialog.Builder builder = new Builder(GameActivity.this);
 				ImageView view = new ImageView(this);
 				Bitmap pic_win_civil = BitmapFactory.decodeResource(getResources(), R.drawable.killer_win);
@@ -228,6 +268,7 @@ public class GameActivity extends Activity implements OnClickListener{
 				builder.setView(view);
 				builder.setTitle("Congratulations!");
 				builder.create().show();
+				*/
 				return true;
 			}
 			case(Config.R_PENDING):{
@@ -448,45 +489,6 @@ public class GameActivity extends Activity implements OnClickListener{
 				}
 			});
 		}
-		
-		/*
-		 AlertDialog.Builder builder = new Builder(GameActivity.this);
-		 ImageView view = new ImageView(this);
-			Bitmap pic_win_civil = BitmapFactory.decodeResource(getResources(), R.drawable.coffee);
-			Matrix matrix = new Matrix();
-			matrix.postScale(2.5f,2.5f);
-			Bitmap resizeBmp = Bitmap.createBitmap(pic_win_civil,0,0,pic_win_civil.getWidth(),pic_win_civil.getHeight(),matrix,true);
-			view.setImageBitmap(resizeBmp);
-			view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-			view.setLayoutParams(new LayoutParams(500, 500));
-			builder.setPositiveButton("Go On" ,new DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface dialog, int which){
-					dialog.dismiss(); 	
-				}
-			});
-			builder.setNeutralButton("Home", new  DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface dialog, int which){
-					config.replay();
-					Intent intent = new Intent(GameActivity.this, InitActivity.class);
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
-					startActivity(intent);  	
-				}
-			});
-			builder.setNegativeButton("Replay",  new  DialogInterface.OnClickListener(){
-				@Override
-				public void onClick(DialogInterface dialog, int which){
-					config.replay();
-					Intent intent = new Intent(GameActivity.this, JudgeSelectActivity.class); 
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
-					startActivity(intent);  
-				}
-			});
-			builder.setMessage("Have a break?");
-			builder.setView(view);
-			builder.create().show();	 
-			*/
 	}
 
 	/**

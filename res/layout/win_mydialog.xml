@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/imageView_background_mydialog"
+        android:layout_alignTop="@id/imageView_background_mydialog2"
         android:layout_marginTop="80dip"
         android:text="CONGRATULATIONS!"
         android:textSize="30dp" >
@@ -29,8 +29,8 @@
         android:id="@+id/pic2"
         android:layout_width="250dp"
         android:layout_height="193dp"
-        android:layout_alignLeft="@id/imageView_background_mydialog"
-        android:layout_alignTop="@id/imageView_background_mydialog"
+        android:layout_alignLeft="@id/imageView_background_mydialog2"
+        android:layout_alignTop="@id/imageView_background_mydialog2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dip"
         android:background = "@drawable/coffee"
@@ -43,18 +43,8 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_centerHorizontal="true"
-	    android:layout_below="@+id/pic"
+	    android:layout_below="@+id/pic2"
 	    android:layout_marginTop="40dp">
-
-    <Button
-     
-        android:id="@+id/button_back_mydialog2"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft ="30dp"
-        android:background="@drawable/back_icon"
-        />
 
     <Button
 
@@ -69,7 +59,7 @@
         android:id="@+id/button_restart2"
         android:layout_width="70dp"
         android:layout_height="70dp"
-       	android:layout_marginLeft ="40dp"
+       	android:layout_marginLeft ="110dp"
         android:background="@drawable/restart" />
 
     </LinearLayout>

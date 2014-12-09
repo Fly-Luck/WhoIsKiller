@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignTop="@id/imageView_background_mydialog"
         android:layout_marginTop="80dip"
-        android:text="CONGRATULATIONS!"
+        android:text="HAVE A BREAK?"
         android:textSize="30dp" >
     </TextView>
 
