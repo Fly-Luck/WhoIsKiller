@@ -4,6 +4,8 @@ import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
@@ -16,10 +18,14 @@ import com.whoiskiller.MyAdapter_img;
 import com.whoiskiller.R;
 import com.whoiskiller.ViewHolder;
 
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -304,8 +310,15 @@ public class GameActivity extends Activity implements OnClickListener{
 		String tempString = "";
 		tempString = "This is "+ checkId +" !";
 		AlertDialog.Builder builder = new Builder(GameActivity.this);
-		builder.setMessage(tempString);
+		//builder.setMessage(tempString);
 		builder.setTitle("Secretly tell police");
+		ImageView view = new ImageView(this);
+		if(checkId.equals("Killer"))
+			view.setImageResource(R.drawable.he_is_killer);
+		else view.setImageResource(R.drawable.he_is_not_killer);
+		view.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		builder.setView(view);
+		builder.setPositiveButton("OK", null);
 		builder.create().show();
 	}
 	/**
@@ -316,7 +329,19 @@ public class GameActivity extends Activity implements OnClickListener{
 		tempString = "Last night player " + (people+1) +" died!";
 		AlertDialog.Builder builder = new Builder(GameActivity.this);
 		builder.setMessage(tempString);
-		builder.setTitle("Judge's Anouncement");
+		builder.setTitle("Judge's Announcement");
+		ImageView view = new ImageView(this);
+		if(people >= judgePos){
+			people++;
+		}
+		Bitmap playerPic = Config.playerList.get(people).getPlayerPicture();
+		Matrix matrix = new Matrix();
+		matrix.postScale(2.5f,2.5f);
+		Bitmap resizeBmp = Bitmap.createBitmap(playerPic,0,0,playerPic.getWidth(),playerPic.getHeight(),matrix,true);
+		view.setImageBitmap(resizeBmp);
+		view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+		view.setLayoutParams(new LayoutParams(500, 500));
+		builder.setView(view);
 		builder.create().show();
 	}
 	/**
