@@ -40,7 +40,8 @@ public class GameActivity extends Activity implements OnClickListener{
 	private ArrayList<String>list_img;
 	private TextView tv_show;// 用于显示选中的条目数
 	private int flagchecked=-1, killed = -1, flagchecked_player=-1;
-	private Button fctBtn, idBtn, linesBtn, cdtBtn, pusBtn;
+	private Button fctBtn, idBtn, linesBtn, pusBtn;
+	private TextView cdtBtn;
 	private static Config config = Config.getInstance();
 	private ImageView headImg;
 	private AlertDialog.Builder builder, builder2;
@@ -75,7 +76,7 @@ public class GameActivity extends Activity implements OnClickListener{
         fctBtn = (Button) findViewById(R.id.function);
         idBtn = (Button) findViewById(R.id.showperson);
         linesBtn = (Button)findViewById(R.id.lines);
-        cdtBtn = (Button) findViewById(R.id.condition);
+        cdtBtn = (TextView) findViewById(R.id.condition);
         fctBtn.setOnClickListener(this);
         pusBtn.setOnClickListener(this);
         idBtn.setOnTouchListener(buttonListener_id);
@@ -198,8 +199,8 @@ public class GameActivity extends Activity implements OnClickListener{
 		 */
 		if(v.getId() == R.id.function){
 			if(config.getCurrentStatus() == -1){
-				Toast.makeText(getApplicationContext(), "GameStart",Toast.LENGTH_SHORT).show();
-				cdtBtn.setText("杀手杀人时刻");
+				Toast.makeText(getApplicationContext(), "Night "+Config.getInstance().getCurrentDay(),Toast.LENGTH_SHORT).show();
+				cdtBtn.setText("Killer killing");
 				fctBtn.setBackgroundResource(R.drawable.kill);
 				config.setCurrentStatus(Config.G_STAT_NIGHT);
 				clearList(); 
@@ -214,13 +215,13 @@ public class GameActivity extends Activity implements OnClickListener{
 						//
 					}else{
 						config.setCurrentStatus(Config.G_STAT_CHECK);
-						cdtBtn.setText("警察验人杀人时刻");
+						cdtBtn.setText("Police checking");
 						fctBtn.setBackgroundResource(R.drawable.check);
 						killed = flagchecked;
 						clearList();
 					}
 				}else{
-					Toast.makeText(getApplicationContext(), "别着急，先选人再杀！",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Please choose a player to kill",Toast.LENGTH_SHORT).show();
 				}
 			}
 			/*
@@ -249,10 +250,10 @@ public class GameActivity extends Activity implements OnClickListener{
 					displayCheckedId(checkedId);
 					clearList();
 					fctBtn.setBackgroundResource(R.drawable.dawn);
-					cdtBtn.setText("天亮了，告诉大家谁死了吧！");
+					cdtBtn.setText("Dawn is coming");
 					config.setCurrentStatus(Config.G_STAT_DAY);
 				}else{
-					Toast.makeText(getApplicationContext(), "别着急，先选人再检查！",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Please choose a player to check",Toast.LENGTH_SHORT).show();
 				}
 			}
 			/*
@@ -263,7 +264,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			else if(config.getCurrentStatus() == Config.G_STAT_DAY){
 				clearList();
 				fctBtn.setBackgroundResource(R.drawable.vote);
-				cdtBtn.setText("投票谁是凶手？");
+				cdtBtn.setText("Voting the killer");
 				//Toast.makeText(getApplicationContext(), "今晚死的人是"+killed,Toast.LENGTH_SHORT).show();
 				displayDeadPerson(killed);
 				config.setCurrentStatus(Config.G_STAT_VOTE);
@@ -274,13 +275,13 @@ public class GameActivity extends Activity implements OnClickListener{
 					if(checkIfIsEnd()){
 					}else{
 						config.setCurrentStatus(Config.G_STAT_INIT);
-						cdtBtn.setText("夜幕降临");
+						cdtBtn.setText("Dark is coming");
 						fctBtn.setBackgroundResource(R.drawable.dark);
 						clearList();
 						config.setCurrentDay(config.getCurrentDay()+1);
 					}
 				}else{
-					Toast.makeText(getApplicationContext(), "别着急，先选人再投票！",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Please choose a player to vote",Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
@@ -301,10 +302,10 @@ public class GameActivity extends Activity implements OnClickListener{
 	 */
 	private void displayCheckedId(String checkId){
 		String tempString = "";
-		tempString = "这个人的身份是 "+ checkId +" !";
+		tempString = "This is "+ checkId +" !";
 		AlertDialog.Builder builder = new Builder(GameActivity.this);
 		builder.setMessage(tempString);
-		builder.setTitle("偷偷告诉警察");
+		builder.setTitle("Secretly tell police");
 		builder.create().show();
 	}
 	/**
@@ -312,10 +313,10 @@ public class GameActivity extends Activity implements OnClickListener{
 	 */
 	private void displayDeadPerson(int people) {
 		String tempString = "";
-		tempString = "昨天死去的是 " + (people+1) +" 号玩家";
+		tempString = "Last night player " + (people+1) +" died!";
 		AlertDialog.Builder builder = new Builder(GameActivity.this);
 		builder.setMessage(tempString);
-		builder.setTitle("法官宣布");
+		builder.setTitle("Judge's Anouncement");
 		builder.create().show();
 	}
 	/**
@@ -352,23 +353,23 @@ public class GameActivity extends Activity implements OnClickListener{
 		String tempMessage = "";
 		switch (config.getCurrentStatus()) {
 			case (Config.G_STAT_CHECK):{
-				tempMessage = "是时候展现警察的慧眼去探寻他们的真实身份了！";
+				tempMessage = "Police, open eyes, \nchoose one to check!";
 				break;
 			}case (Config.G_STAT_DAY):{
-				tempMessage = "天亮了";
+				tempMessage = "It's Dawn, everybody open eyes!";
 				break;
 			}case (Config.G_STAT_INIT):{
-				tempMessage = "游戏开始！";
+				tempMessage = "It's Dark, everybody close eyes!";
 				break;
 			}
 			case (Config.G_STAT_KILL):{
-				tempMessage = "请杀手杀人！";
+				tempMessage = "Killers, open eyes, \nchoose one to kill!";
 				break;
 			}case (Config.G_STAT_NIGHT):{
-				tempMessage = "夜幕降临，鬼影重重";
+				tempMessage = "Killers, open eyes, \nchoose one to kill!";
 				break;
 			}case (Config.G_STAT_VOTE):{
-				tempMessage = "选出你们心中的杀手吧！";
+				tempMessage = "Vote for who you think is the Killer!";
 				break;
 			}
 		}
