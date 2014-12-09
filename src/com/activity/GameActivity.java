@@ -70,6 +70,7 @@ public class GameActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_game);
 		bind();
 		initialList();	
+		new AlertDialog.Builder(this).setTitle("Judge").setMessage("Please note:\n1. Speak out 'Judger voice' before click button!\n2. Don't let players see the screen at Night!").show();
 	}
 	
 	private void dataChanged() {
