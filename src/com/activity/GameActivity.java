@@ -4,7 +4,10 @@ import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -159,11 +162,73 @@ public class GameActivity extends Activity implements OnClickListener{
 	public boolean checkIfIsEnd(){
 		switch (config.getResult()) {
 			case (Config.R_CIVIL_WIN) : {
-				new AlertDialog.Builder(this).setMessage("Civil and Cops Win!").setTitle("Congratulations!").show();
+				AlertDialog.Builder builder = new Builder(GameActivity.this);
+				ImageView view = new ImageView(this);
+				Bitmap pic_win_civil = BitmapFactory.decodeResource(getResources(), R.drawable.civil_win);
+				Matrix matrix = new Matrix();
+				matrix.postScale(2.5f,2.5f);
+				Bitmap resizeBmp = Bitmap.createBitmap(pic_win_civil,0,0,pic_win_civil.getWidth(),pic_win_civil.getHeight(),matrix,true);
+				view.setImageBitmap(resizeBmp);
+				view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+				view.setLayoutParams(new LayoutParams(500, 500));
+				builder.setPositiveButton("Home", new  DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which){
+						config.replay();
+						Intent intent = new Intent(GameActivity.this, InitActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+						startActivity(intent);  	
+					}
+				});
+				builder.setNegativeButton("Replay",  new  DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which){
+						config.replay();
+						Intent intent = new Intent(GameActivity.this, JudgeSelectActivity.class); 
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+						startActivity(intent);  
+					}
+				});
+				builder.setView(view);
+				builder.setTitle("Congratulations!");
+				builder.create().show();
+				
 				return true;
 			}
 			case(Config.R_KILLER_WIN):{
-				new AlertDialog.Builder(this).setMessage("Killers Win!").setTitle("Congratulations!").show();
+				//new AlertDialog.Builder(this).setMessage("Killers Win!").setTitle("Congratulations!").show();
+				//return true;
+
+				AlertDialog.Builder builder = new Builder(GameActivity.this);
+				ImageView view = new ImageView(this);
+				Bitmap pic_win_civil = BitmapFactory.decodeResource(getResources(), R.drawable.killer_win);
+				Matrix matrix = new Matrix();
+				matrix.postScale(2.5f,2.5f);
+				Bitmap resizeBmp = Bitmap.createBitmap(pic_win_civil,0,0,pic_win_civil.getWidth(),pic_win_civil.getHeight(),matrix,true);
+				view.setImageBitmap(resizeBmp);
+				view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+				view.setLayoutParams(new LayoutParams(500, 500));
+				builder.setPositiveButton("Home", new  DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which){
+						config.replay();
+						Intent intent = new Intent(GameActivity.this, InitActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+						startActivity(intent);  	
+					}
+				});
+				builder.setNegativeButton("Replay",  new  DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which){
+						config.replay();
+						Intent intent = new Intent(GameActivity.this, InitActivity.class); 
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+						startActivity(intent);  
+					}
+				});
+				builder.setView(view);
+				builder.setTitle("Congratulations!");
+				builder.create().show();
 				return true;
 			}
 			case(Config.R_PENDING):{
@@ -252,7 +317,6 @@ public class GameActivity extends Activity implements OnClickListener{
 							break;
 						}
 					}
-					//Toast.makeText(getApplicationContext(), checkedId,Toast.LENGTH_SHORT).show();
 					displayCheckedId(checkedId);
 					clearList();
 					fctBtn.setBackgroundResource(R.drawable.dawn);
@@ -271,7 +335,6 @@ public class GameActivity extends Activity implements OnClickListener{
 				clearList();
 				fctBtn.setBackgroundResource(R.drawable.vote);
 				cdtBtn.setText("Voting the killer");
-				//Toast.makeText(getApplicationContext(), "今晚死的人是"+killed,Toast.LENGTH_SHORT).show();
 				displayDeadPerson(killed);
 				config.setCurrentStatus(Config.G_STAT_VOTE);
 			}
@@ -349,9 +412,41 @@ public class GameActivity extends Activity implements OnClickListener{
 	 */
 	private void pauseFunction(){
 		 AlertDialog.Builder builder = new Builder(GameActivity.this);
-		 builder.setMessage("这里是内容");
-		 builder.setTitle("提示");
-		 builder.create().show();
+		 ImageView view = new ImageView(this);
+			Bitmap pic_win_civil = BitmapFactory.decodeResource(getResources(), R.drawable.coffee);
+			Matrix matrix = new Matrix();
+			matrix.postScale(2.5f,2.5f);
+			Bitmap resizeBmp = Bitmap.createBitmap(pic_win_civil,0,0,pic_win_civil.getWidth(),pic_win_civil.getHeight(),matrix,true);
+			view.setImageBitmap(resizeBmp);
+			view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+			view.setLayoutParams(new LayoutParams(500, 500));
+			builder.setPositiveButton("Go On" ,new DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which){
+					dialog.dismiss(); 	
+				}
+			});
+			builder.setNeutralButton("Home", new  DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which){
+					config.replay();
+					Intent intent = new Intent(GameActivity.this, InitActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+					startActivity(intent);  	
+				}
+			});
+			builder.setNegativeButton("Replay",  new  DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which){
+					config.replay();
+					Intent intent = new Intent(GameActivity.this, JudgeSelectActivity.class); 
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+					startActivity(intent);  
+				}
+			});
+			builder.setMessage("Have a break?");
+			builder.setView(view);
+			builder.create().show();	 
 	}
 
 	/**
@@ -378,7 +473,7 @@ public class GameActivity extends Activity implements OnClickListener{
 		String tempMessage = "";
 		switch (config.getCurrentStatus()) {
 			case (Config.G_STAT_CHECK):{
-				tempMessage = "Police, open eyes, \nchoose one to check!";
+				tempMessage = "Killers closes your eyes please\n and please Police, open eyes, \nchoose one to check!";
 				break;
 			}case (Config.G_STAT_DAY):{
 				tempMessage = "It's Dawn, everybody open eyes!";
