@@ -21,7 +21,7 @@ import com.whoiskiller.R;
  *
  */
 public class MainActivity extends Activity implements OnClickListener, OnTouchListener{
-	private ImageView takePicBtn;
+	public static ImageView takePicBtn;
 	private ImageView showPicBtn;
 	private ImageView switchBtn;
 	private ImageView showPlayerBtn;
@@ -29,7 +29,6 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	private MySurfaceView sView;
 	private int sViewWidth = 500;
 	private int sViewHeight = 500;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Config.getInstance().restart();
@@ -45,7 +44,9 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		showPicBtn.setOnClickListener(this);
 		showPicBtn.setOnTouchListener(this);
 		switchBtn.setOnClickListener(this);
+		switchBtn.setOnTouchListener(this);
 		showPlayerBtn.setOnClickListener(this);
+		showPlayerBtn.setOnTouchListener(this);
 		LayoutParams params = sView.getLayoutParams();
 		params.height = sViewHeight;
 		params.width = sViewWidth;
@@ -55,14 +56,20 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	
 	public static void refreshPlayerNum(){
 		cameraHint.setText("Now we have "+Config.playerList.size()+" players");
+		takePicBtn.setClickable(true);
+		takePicBtn.setAlpha(1f);
 	}
 	
 	@SuppressWarnings("static-access")
 	@Override
 	public void onClick(View v) {
 		if(v.equals(takePicBtn)){
+			if(!takePicBtn.isClickable())
+				return;
+			takePicBtn.setClickable(false);
+			takePicBtn.setAlpha(0.5f);
 			if(Config.getInstance().playerList.size() == Config.MAX_PLAYERS){
-				new AlertDialog.Builder(this).setMessage("Maximum players reached!").setTitle("Error").show();
+				new AlertDialog.Builder(this).setMessage("Maximum players reached!").setTitle("Error").setPositiveButton("OK", null).show();
 				return;
 			} else{
 				sView.camTakePic();
@@ -73,7 +80,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		}
 		if(v.getId() == showPicBtn.getId()){
 			if(Config.playerList.size() < 7){
-				new AlertDialog.Builder(this).setMessage("Minimum players is 7!").setTitle("Error").show();
+				new AlertDialog.Builder(this).setMessage("Minimum players is 7!").setTitle("Error").setPositiveButton("OK", null).show();
 				return;
 			}
 			startActivity(new Intent(this.getBaseContext(), JudgeSelectActivity.class));
@@ -91,6 +98,15 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 				return true;
 			} else if(event.getAction() == MotionEvent.ACTION_UP){
 				showPicBtn.setImageResource(R.drawable.yes);
+				v.performClick();
+				return true;
+			}
+		} else if(v.getId() == R.id.switchBtn || v.getId() == R.id.showPlayersBtn){
+			if(event.getAction() == MotionEvent.ACTION_DOWN){
+				v.setAlpha(0.5f);
+				return true;
+			} else if(event.getAction() == MotionEvent.ACTION_UP){
+				v.setAlpha(1f);
 				v.performClick();
 				return true;
 			}
