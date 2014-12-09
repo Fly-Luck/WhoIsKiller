@@ -17,36 +17,27 @@
 	    android:scaleType="centerInside"
 	    android:layout_marginTop="30dip"
 	    android:layout_gravity="center_horizontal"/>
-	<LinearLayout
-	    android:layout_marginTop="50dip"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="bottom"
-	    android:orientation="horizontal">
-		<LinearLayout 
-	        android:orientation="vertical" 
-	        android:layout_width="fill_parent" 
-	        android:layout_height="fill_parent" 
-	        android:layout_weight="1">
-	        <ImageView android:id="@+id/infoBtn"
-	            android:layout_width="40dip"
-	            android:layout_height="40dip"
-	            android:layout_gravity="left|center_vertical"
-	            android:layout_marginLeft="3.0dip"
-	            android:background="@drawable/info"/>
-		</LinearLayout>
-        <LinearLayout 
-	        android:orientation="vertical" 
-	        android:layout_width="fill_parent" 
-	        android:layout_height="fill_parent" 
-	        android:layout_weight="1">
-	        <ImageView android:id="@+id/playersBtn"
-	            android:layout_width="120dip"
-	            android:layout_height="20dip"
-	            android:layout_gravity="right|center_vertical"
-	            android:layout_marginRight="3.0dip"
-	            android:background="@drawable/players" />
-		</LinearLayout>
-	</LinearLayout>
+	<RelativeLayout android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+		    android:layout_marginTop="20dip"
+	    android:layout_gravity="center">
+		<ImageView android:id="@+id/playersBtn"
+		    android:layout_width="150dip"
+		    android:layout_height="30dip"
+		    android:layout_gravity="center_horizontal"
+		    android:src="@drawable/players" />
+		<ImageView android:src="@drawable/user"
+		    android:layout_marginTop="5dip"
+		    android:layout_marginLeft="5dip"
+		    android:layout_width="20dip"
+		    android:layout_height="20dip"/>
+	</RelativeLayout>
+	<ImageView android:id="@+id/infoBtn"
+	    android:layout_width="40dip"
+	    android:layout_height="40dip"
+	    android:layout_marginTop="20dip"
+	    android:layout_marginLeft="10dip"
+	    android:layout_gravity="left"
+	    android:background="@drawable/info"/>		
 
 </LinearLayout>
