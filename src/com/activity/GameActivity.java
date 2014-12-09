@@ -14,6 +14,8 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
+import javax.security.auth.PrivateCredentialPermission;
+
 import com.entity.Config;
 import com.entity.Player;
 import com.whoiskiller.MyAdapter;
@@ -56,7 +58,7 @@ public class GameActivity extends Activity implements OnClickListener{
 	private AlertDialog.Builder builder, builder2;
 	private AlertDialog alert, alert2;
 	private int flag=0, judgePos;
-	
+	private AlertDialog myDialog = null;
 	/**
 	 * Start Game
 	 * @author Wu Dong
@@ -196,9 +198,6 @@ public class GameActivity extends Activity implements OnClickListener{
 				return true;
 			}
 			case(Config.R_KILLER_WIN):{
-				//new AlertDialog.Builder(this).setMessage("Killers Win!").setTitle("Congratulations!").show();
-				//return true;
-
 				AlertDialog.Builder builder = new Builder(GameActivity.this);
 				ImageView view = new ImageView(this);
 				Bitmap pic_win_civil = BitmapFactory.decodeResource(getResources(), R.drawable.killer_win);
@@ -361,7 +360,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			
 		}
 		if(v.getId() == R.id.pause){
-			pauseFunction();
+			pauseFunction(1);
 		}
 	}
 	
@@ -410,7 +409,47 @@ public class GameActivity extends Activity implements OnClickListener{
 	/**
 	 * 暂停界面
 	 */
-	private void pauseFunction(){
+	private void pauseFunction(int i){
+		//i==1 into pausefuntion
+		if(i==1){
+			myDialog = new AlertDialog.Builder(GameActivity.this).create();
+			myDialog.show();
+			myDialog.getWindow().setContentView(R.layout.mydialog);
+			myDialog.getWindow()
+			.findViewById(R.id.button_back_mydialog)
+			.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					myDialog.dismiss();
+					
+				}
+			});
+			myDialog.getWindow()
+			.findViewById(R.id.button_home)
+			.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					myDialog.dismiss();
+					Intent intent = new Intent(GameActivity.this, InitActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+					startActivity(intent);  	
+				}
+			});
+			
+			myDialog.getWindow()
+			.findViewById(R.id.button_restart)
+			.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					myDialog.dismiss();
+					Intent intent = new Intent(GameActivity.this, JudgeSelectActivity.class); 
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  
+					startActivity(intent);  
+				}
+			});
+		}
+		
+		/*
 		 AlertDialog.Builder builder = new Builder(GameActivity.this);
 		 ImageView view = new ImageView(this);
 			Bitmap pic_win_civil = BitmapFactory.decodeResource(getResources(), R.drawable.coffee);
@@ -447,6 +486,7 @@ public class GameActivity extends Activity implements OnClickListener{
 			builder.setMessage("Have a break?");
 			builder.setView(view);
 			builder.create().show();	 
+			*/
 	}
 
 	/**
